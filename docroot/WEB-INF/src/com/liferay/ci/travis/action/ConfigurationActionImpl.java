@@ -17,12 +17,8 @@ package com.liferay.ci.travis.action;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Manuel de la Peña
@@ -35,28 +31,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String baseAPIURL = getParameter(actionRequest, "baseapiurl");
-
-		if (Validator.isNull(baseAPIURL)) {
-			SessionErrors.add(actionRequest, "baseApiURLError");
-		}
-
-		String user = getParameter(actionRequest, "username");
-		String password = getParameter(actionRequest, "password");
-
-		if (Validator.isNull(user) || Validator.isNull(password)) {
-			SessionErrors.add(actionRequest, "httpAuthError");
-		}
-
 		super.processAction(portletConfig, actionRequest, actionResponse);
-
-		String base64EncodedPassword = Base64.encode(password.getBytes());
-
-		PortletPreferences preferences =  actionRequest.getPreferences();
-
-		preferences.setValue("password", base64EncodedPassword);
-
-		preferences.store();
 	}
 
 }
