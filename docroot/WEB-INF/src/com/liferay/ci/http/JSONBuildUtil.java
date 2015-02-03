@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  *
  * @author Manuel de la Peña
  */
-public class JenkinsConnectUtil {
+public class JSONBuildUtil {
 
 	public static JSONArray getBuilds(
 			AuthConnectionParams connectionParams, String jobName,
@@ -161,7 +161,7 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	private JenkinsConnectUtil() {
+	private JSONBuildUtil() {
 	}
 
 	private static JSONObject getBuildTestReport(
@@ -196,12 +196,12 @@ public class JenkinsConnectUtil {
 		return lastFailed;
 	}
 
-	private static JenkinsConnectImpl getService(
+	private static TravisConnectImpl getService(
 			AuthConnectionParams connectionParams)
 		throws IOException {
 
 		if (_service == null) {
-			_service = new JenkinsConnectImpl();
+			_service = new TravisConnectImpl();
 		}
 
 		_service.setAuthConnectionParams(connectionParams);
@@ -209,7 +209,7 @@ public class JenkinsConnectUtil {
 		return _service;
 	}
 
-	private static JenkinsConnectImpl _service;
-	private static Log _log = LogFactoryUtil.getLog(JenkinsConnectUtil.class);
+	private static TravisConnectImpl _service;
+	private static Log _log = LogFactoryUtil.getLog(JSONBuildUtil.class);
 
 }

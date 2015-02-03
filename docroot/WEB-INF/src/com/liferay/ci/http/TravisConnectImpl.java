@@ -28,9 +28,9 @@ import com.liferay.ci.json.JSONReaderImpl;
  *
  * @author Manuel de la Peña
  */
-public class JenkinsConnectImpl extends BaseConnectImpl {
+public class TravisConnectImpl extends BaseConnectImpl {
 
-	public JenkinsConnectImpl() throws IOException {
+	public TravisConnectImpl() throws IOException {
 		super();
 
 		_apiURLSuffix = "api/json";
