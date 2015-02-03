@@ -17,8 +17,6 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-String userName = GetterUtil.getString(portletPreferences.getValue("username", null));
-String password = GetterUtil.getString(portletPreferences.getValue("password", null));
 String buildsNumber = GetterUtil.getString(portletPreferences.getValue("buildsnumber", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
@@ -49,22 +47,10 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 <aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<aui:fieldset label="basic-authentication-configuration">
-		<div class="alert alert-info">
-			<span class="displaying-help-message-holder">
-				<liferay-ui:message key="please-set-up-here-basic-authentication-for-your-ci-server" />
-			</span>
-		</div>
-
-		<aui:input cssClass="lfr-input-text-container" label="username" name="preferences--username--" type="text" value="<%= userName %>" />
-
-		<aui:input label="password" name="preferences--password--" type="password" value="" />
-	</aui:fieldset>
-
 	<aui:fieldset label="builds-view-configuration">
-		<liferay-ui:error key="baseApiURLError" message="please-enter-a-valid-base-api-url" />
-
-		<aui:input cssClass="lfr-input-text-container" label="base-api-url" name="preferences--baseapiurl--" type="text" value="<%= baseApiURL %>" />
+		<div class="alert alert-info">
+			Travis-CI API URL is set to <%= baseApiURL %>
+		</div>
 
 		<aui:input cssClass="lfr-input-text-container" label="job-name" name="preferences--jobname--" type="text" value="<%= jobName %>" />
 
