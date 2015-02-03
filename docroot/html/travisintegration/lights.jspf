@@ -23,10 +23,10 @@ String image = "brokenbuild";
 String failingTestDiv = StringPool.BLANK;
 String cssClass = "bottom";
 
-if (lastBuildStatus.equals(JenkinsIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS)) {
+if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS)) {
 	image = "everythingisok";
 }
-else if (lastBuildStatus.equals(JenkinsIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+else if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 	image = "failingtestprincipal";
 
 	JenkinsBuild testResults = (JenkinsBuild)request.getAttribute("TEST_RESULTS");

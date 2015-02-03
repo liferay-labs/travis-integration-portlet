@@ -24,9 +24,9 @@ String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", nul
 jobName = JenkinsJobNameProcessorUtil.process(jobName);
 
 String jobURL = baseApiURL + "/job/" + jobName;
-long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(JenkinsIntegrationConstants.DEFAULT_TIMEOUT)));
+long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
-int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(JenkinsIntegrationConstants.VIEW_MODE_SERIES)));
+int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
 
 boolean configured = ConfigurationValidator.isConfigured(portletPreferences);
 
@@ -55,13 +55,13 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 			<liferay-ui:error exception="<%= FileNotFoundException.class %>" message="the-job-could-not-be-retrieved-please-review-configuration" />
 
 			<c:choose>
-				<c:when test="<%= (viewMode == JenkinsIntegrationConstants.VIEW_MODE_SERIES) %>">
+				<c:when test="<%= (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) %>">
 					<%@ include file="builds.jspf" %>
 				</c:when>
-				<c:when test="<%=(viewMode == JenkinsIntegrationConstants.VIEW_MODE_JOBS_STACK)%>">
+				<c:when test="<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK)%>">
 					<%@ include file="stack.jspf" %>
 				</c:when>
-				<c:when test="<%=(viewMode == JenkinsIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)%>">
+				<c:when test="<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)%>">
 					<%@ include file="lights.jspf" %>
 				</c:when>
 				<c:otherwise>

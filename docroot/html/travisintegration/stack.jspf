@@ -25,7 +25,7 @@ JenkinsJob[] jenkinsJobs = (JenkinsJob[])GetterUtil.getObject(request.getAttribu
 for (JenkinsJob jenkinsJob : jenkinsJobs) {
 	String status = jenkinsJob.getLastBuildStatus();
 
-	if (jenkinsJob.getLastBuildStatus().equals(JenkinsIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+	if (jenkinsJob.getLastBuildStatus().equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 		status += " (" + ((JenkinsUnstableJob)jenkinsJob).getFailedTestCount() +")";
 	}
 %>
