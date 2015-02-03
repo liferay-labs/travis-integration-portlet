@@ -17,23 +17,23 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-JenkinsJob[] jenkinsJobs = (JenkinsJob[])GetterUtil.getObject(request.getAttribute("JENKINS_JOBS"), new JenkinsJob[0]);
+ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getObject(request.getAttribute("JENKINS_JOBS"), new ContinuousIntegrationJob[0]);
 %>
 
 <div class="jobs-wrapper container-fluid">
 <%
-for (JenkinsJob jenkinsJob : jenkinsJobs) {
-	String status = jenkinsJob.getLastBuildStatus();
+for (ContinuousIntegrationJob ciJob : ciJobs) {
+	String status = ciJob.getLastBuildStatus();
 
-	if (jenkinsJob.getLastBuildStatus().equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
-		status += " (" + ((JenkinsUnstableJob)jenkinsJob).getFailedTestCount() +")";
+	if (ciJob.getLastBuildStatus().equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+		status += " (" + ((ContinuousIntegrationUnstableJob)ciJob).getFailedTestCount() +")";
 	}
 %>
 	<div class="job-wrapper row-fluid">
 		<div class="job-name span7 text-left">
-			<%= jenkinsJob.getJobAlias() %>
+			<%= ciJob.getJobAlias() %>
 		</div>
-		<div class="job-status <%= jenkinsJob.getLastBuildStatus().toLowerCase() %> span5 text-center">
+		<div class="job-status <%= ciJob.getLastBuildStatus().toLowerCase() %> span5 text-center">
 			<%= status %>
 		</div>
 	</div>

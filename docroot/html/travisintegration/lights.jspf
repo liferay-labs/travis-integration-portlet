@@ -29,7 +29,7 @@ if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCE
 else if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 	image = "failingtestprincipal";
 
-	JenkinsBuild testResults = (JenkinsBuild)request.getAttribute("TEST_RESULTS");
+	ContinuousIntegrationBuild testResults = (ContinuousIntegrationBuild)request.getAttribute("TEST_RESULTS");
 
 	int failCount = testResults.getFailedTests();
 
