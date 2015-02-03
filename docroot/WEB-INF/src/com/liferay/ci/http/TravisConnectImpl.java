@@ -32,8 +32,6 @@ public class TravisConnectImpl extends BaseConnectImpl {
 
 	public TravisConnectImpl() throws IOException {
 		super();
-
-		_apiURLSuffix = "api/json";
 	}
 
 	public JSONObject getBuildTestReport(JSONObject build)
@@ -47,7 +45,7 @@ public class TravisConnectImpl extends BaseConnectImpl {
 	public JSONObject getBuildTestReport(String url)
 		throws IOException, JSONException {
 
-		return _get(url + "testReport/" + _apiURLSuffix, false);
+		return _get(url + "testReport/", false);
 	}
 
 	public ContinuousIntegrationBuild getLastBuild(JSONObject build)
@@ -60,7 +58,7 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		ContinuousIntegrationBuild continuousIntegrationBuild =
 			new ContinuousIntegrationBuild(buildNumber, new URL(buildURL));
 
-		JSONObject buildResult = _get(buildURL + _apiURLSuffix, false);
+		JSONObject buildResult = _get(buildURL, false);
 
 		Object result = buildResult.get("result");
 
@@ -90,11 +88,7 @@ public class TravisConnectImpl extends BaseConnectImpl {
 	}
 
 	protected String getJobAPIURLSuffix(String jobName) {
-		return "/job/" + jobName + "/" + _apiURLSuffix;
-	}
-
-	public void setAPIURLSuffix(String apiURLSuffix) {
-		_apiURLSuffix = apiURLSuffix;
+		return "/job/" + jobName + "/";
 	}
 
 	public void setAuthConnectionParams(AuthConnectionParams connectionParams) {
@@ -111,7 +105,5 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		return JSONReaderImpl.readJSONFromURL(
 			connect(_connectionParams, apiURL, appendBaseURL));
 	}
-
-	private static String _apiURLSuffix;
 
 }
