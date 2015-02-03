@@ -23,9 +23,9 @@ String buildsNumber = GetterUtil.getString(portletPreferences.getValue("buildsnu
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
 
-int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(JenkinsIntegrationConstants.VIEW_MODE_SERIES)));
+int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
 
-long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(JenkinsIntegrationConstants.DEFAULT_TIMEOUT)));
+long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
 boolean displayStacked = GetterUtil.getBoolean(portletPreferences.getValue("stacked", null));
 
@@ -36,10 +36,10 @@ boolean displaySkipCount = GetterUtil.getBoolean(portletPreferences.getValue("sk
 boolean displayFailCount = GetterUtil.getBoolean(portletPreferences.getValue("failcount", null));
 boolean displayTotalCount = GetterUtil.getBoolean(portletPreferences.getValue("totalcount", null));
 
-String passedCountColor = GetterUtil.getString(portletPreferences.getValue("passedcountcolor", JenkinsIntegrationConstants.DEFAULT_PASSED_COLOR));
-String skippedCountColor = GetterUtil.getString(portletPreferences.getValue("skippedcountcolor", JenkinsIntegrationConstants.DEFAULT_SKIPPED_COLOR));
-String failedCountColor = GetterUtil.getString(portletPreferences.getValue("failedcountcolor", JenkinsIntegrationConstants.DEFAULT_FAILED_COLOR));
-String totalCountColor = GetterUtil.getString(portletPreferences.getValue("totalcountcolor", JenkinsIntegrationConstants.DEFAULT_TOTAL_COLOR));
+String passedCountColor = GetterUtil.getString(portletPreferences.getValue("passedcountcolor", TravisIntegrationConstants.DEFAULT_PASSED_COLOR));
+String skippedCountColor = GetterUtil.getString(portletPreferences.getValue("skippedcountcolor", TravisIntegrationConstants.DEFAULT_SKIPPED_COLOR));
+String failedCountColor = GetterUtil.getString(portletPreferences.getValue("failedcountcolor", TravisIntegrationConstants.DEFAULT_FAILED_COLOR));
+String totalCountColor = GetterUtil.getString(portletPreferences.getValue("totalcountcolor", TravisIntegrationConstants.DEFAULT_TOTAL_COLOR));
 
 String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", null));
 %>
@@ -71,9 +71,9 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 		<aui:input cssClass="lfr-input-text-container" label="reload-timeout" name="preferences--timeout--" type="text" value="<%= timeout %>" />
 
 		<aui:select id="preferences--viewmode--" label="view-mode" name="preferences--viewmode--">
-			<aui:option selected='<%= (viewMode == JenkinsIntegrationConstants.VIEW_MODE_SERIES) %>' label="series-view-mode" value="<%= JenkinsIntegrationConstants.VIEW_MODE_SERIES %>" />
-			<aui:option selected='<%=(viewMode == JenkinsIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)%>' label="traffic-lights-view-mode" value="<%=JenkinsIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS%>" />
-			<aui:option selected='<%=(viewMode == JenkinsIntegrationConstants.VIEW_MODE_JOBS_STACK)%>' label="jobs-stack-view-mode" value="<%=JenkinsIntegrationConstants.VIEW_MODE_JOBS_STACK%>" />
+			<aui:option selected='<%= (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) %>' label="series-view-mode" value="<%= TravisIntegrationConstants.VIEW_MODE_SERIES %>" />
+			<aui:option selected='<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)%>' label="traffic-lights-view-mode" value="<%=TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS%>" />
+			<aui:option selected='<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK)%>' label="jobs-stack-view-mode" value="<%=TravisIntegrationConstants.VIEW_MODE_JOBS_STACK%>" />
 		</aui:select>
 
         <div class="alert alert-info">

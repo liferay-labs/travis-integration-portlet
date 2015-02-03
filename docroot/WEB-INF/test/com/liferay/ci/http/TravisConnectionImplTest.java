@@ -31,7 +31,7 @@ public class TravisConnectionImplTest {
 
 	@Before
 	public void setUp() throws IOException {
-		JenkinsConnectImpl connectionImpl = new JenkinsConnectImpl();
+		TravisConnectImpl connectionImpl = new TravisConnectImpl();
 
 		connectionParams = connectionImpl._connectionParams;
 	}
@@ -40,7 +40,7 @@ public class TravisConnectionImplTest {
 	public void testGetBuildsTestReport() throws Exception {
 		String jobName = "mdelapenya";
 
-		JSONArray testReports = JenkinsConnectUtil.getBuilds(
+		JSONArray testReports = JSONBuildUtil.getBuilds(
 			connectionParams, jobName, 0);
 
 		assertThat(testReports).isNotNull();
@@ -53,7 +53,7 @@ public class TravisConnectionImplTest {
 
 		String jobName = "mdelapenya";
 
-		JenkinsConnectUtil.getBuilds(connectionParams, jobName, 0);
+		JSONBuildUtil.getBuilds(connectionParams, jobName, 0);
 
 		fail();
 	}
@@ -62,7 +62,7 @@ public class TravisConnectionImplTest {
 	public void testGetBuildsTestReportMaxNumber() throws Exception {
 		String jobName = "mdelapenya";
 
-		JSONArray testReports = JenkinsConnectUtil.getBuilds(
+		JSONArray testReports = JSONBuildUtil.getBuilds(
 			connectionParams, jobName, 100);
 
 		assertThat(testReports).isNotNull();
@@ -73,7 +73,7 @@ public class TravisConnectionImplTest {
 	public void testGetBuildsTestReportMaxNumberNegative() throws Exception {
 		String jobName = "mdelapenya";
 
-		JSONArray testReports = JenkinsConnectUtil.getBuilds(
+		JSONArray testReports = JSONBuildUtil.getBuilds(
 			connectionParams, jobName, -1);
 
 		assertThat(testReports).isNotNull();
@@ -84,7 +84,7 @@ public class TravisConnectionImplTest {
 	public void testGetBuildsTestReportMaxNumberLessThan() throws Exception {
 		String jobName = "mdelapenya";
 
-		JSONArray testReports = JenkinsConnectUtil.getBuilds(
+		JSONArray testReports = JSONBuildUtil.getBuilds(
 			connectionParams, jobName, 3);
 
 		assertThat(testReports).isNotNull();

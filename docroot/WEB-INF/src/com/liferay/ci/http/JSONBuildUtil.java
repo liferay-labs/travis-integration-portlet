@@ -22,9 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.liferay.ci.travis.vo.JenkinsBuild;
-import com.liferay.ci.travis.vo.JenkinsJob;
-import com.liferay.ci.travis.vo.JenkinsUnstableJob;
+import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
+import com.liferay.ci.travis.vo.ContinuousIntegrationJob;
+import com.liferay.ci.travis.vo.ContinuousIntegrationUnstableJob;
 import com.liferay.ci.portlet.TravisIntegrationConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  *
  * @author Manuel de la Peña
  */
-public class JenkinsConnectUtil {
+public class JSONBuildUtil {
 
 	public static JSONArray getBuilds(
 			AuthConnectionParams connectionParams, String jobName,
@@ -73,7 +73,7 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	public static JenkinsBuild getLastBuild(
+	public static ContinuousIntegrationBuild getLastBuild(
 			AuthConnectionParams connectionParams, String jobName)
 		throws IOException, JSONException {
 
@@ -95,7 +95,7 @@ public class JenkinsConnectUtil {
 		JSONObject lastBuild = getPreviousBuild(
 			lastCompletedBuild, lastFailedBuild);
 
-		JenkinsBuild result = null;
+		ContinuousIntegrationBuild result = null;
 
 		try {
 			result = getService(connectionParams).getLastBuild(lastBuild);
@@ -109,11 +109,12 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	public static JenkinsJob[] getLastBuilds(
+	public static ContinuousIntegrationJob[] getLastBuilds(
 			AuthConnectionParams connectionParams, String... jobNames)
 		throws IOException, JSONException {
 
-		JenkinsJob[] result = new JenkinsJob[jobNames.length];
+		ContinuousIntegrationJob[] result =
+			new ContinuousIntegrationJob[jobNames.length];
 
 		for (int i = 0; i < jobNames.length; i++) {
 			String fullJobName = jobNames[i];
@@ -137,18 +138,18 @@ public class JenkinsConnectUtil {
 				jobAlias = fullJobName;
 			}
 
-
-			JenkinsBuild lastBuild = getLastBuild(connectionParams, jobName);
+			ContinuousIntegrationBuild lastBuild =
+				getLastBuild(connectionParams, jobName);
 
 			if (lastBuild.getStatus().equals(
 				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 
-				result[i] = new JenkinsUnstableJob(
+				result[i] = new ContinuousIntegrationUnstableJob(
 					jobName, jobAlias, lastBuild.getStatus(),
 					lastBuild.getFailedTests());
 			}
 			else {
-				result[i] = new JenkinsJob(
+				result[i] = new ContinuousIntegrationJob(
 					jobName, jobAlias, lastBuild.getStatus());
 			}
 		}
@@ -160,7 +161,7 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	private JenkinsConnectUtil() {
+	private JSONBuildUtil() {
 	}
 
 	private static JSONObject getBuildTestReport(
@@ -195,12 +196,12 @@ public class JenkinsConnectUtil {
 		return lastFailed;
 	}
 
-	private static JenkinsConnectImpl getService(
+	private static TravisConnectImpl getService(
 			AuthConnectionParams connectionParams)
 		throws IOException {
 
 		if (_service == null) {
-			_service = new JenkinsConnectImpl();
+			_service = new TravisConnectImpl();
 		}
 
 		_service.setAuthConnectionParams(connectionParams);
@@ -208,7 +209,7 @@ public class JenkinsConnectUtil {
 		return _service;
 	}
 
-	private static JenkinsConnectImpl _service;
-	private static Log _log = LogFactoryUtil.getLog(JenkinsConnectUtil.class);
+	private static TravisConnectImpl _service;
+	private static Log _log = LogFactoryUtil.getLog(JSONBuildUtil.class);
 
 }

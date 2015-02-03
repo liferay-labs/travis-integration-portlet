@@ -29,16 +29,16 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare1() {
-		JenkinsJob unstableJob = new JenkinsJob(
+		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
-		JenkinsJob failedJob = new JenkinsJob(
+		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		JenkinsJob[] sortedJobs = sort(
-			new JenkinsJob[] {unstableJob, failedJob});
+		ContinuousIntegrationJob[] sortedJobs = sort(
+			new ContinuousIntegrationJob[] {unstableJob, failedJob});
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
@@ -50,16 +50,16 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare2() {
-		JenkinsJob unstableJob = new JenkinsJob(
+		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
-		JenkinsJob failedJob = new JenkinsJob(
+		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		JenkinsJob[] sortedJobs = sort(
-			new JenkinsJob[] {failedJob, unstableJob});
+		ContinuousIntegrationJob[] sortedJobs = sort(
+			new ContinuousIntegrationJob[] {failedJob, unstableJob});
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
@@ -71,15 +71,15 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare3() {
-		JenkinsJob successJob = new JenkinsJob(
+		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob failedJob = new JenkinsJob(
+		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		JenkinsJob[] sortedJobs = sort(failedJob, successJob);
+		ContinuousIntegrationJob[] sortedJobs = sort(failedJob, successJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
@@ -91,19 +91,19 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare4() {
-		JenkinsJob successJob = new JenkinsJob(
+		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob unstableJob = new JenkinsJob(
+		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
-		JenkinsJob failedJob = new JenkinsJob(
+		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		JenkinsJob[] sortedJobs = sort(failedJob, successJob, unstableJob);
+		ContinuousIntegrationJob[] sortedJobs = sort(failedJob, successJob, unstableJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
@@ -118,23 +118,23 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare5() {
-		JenkinsJob successJob = new JenkinsJob(
+		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob abortedJob = new JenkinsJob(
+		ContinuousIntegrationJob abortedJob = new ContinuousIntegrationJob(
 			"abortedJobName", "abortedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_ABORTED);
 
-		JenkinsJob unstableJob = new JenkinsJob(
+		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
-		JenkinsJob failedJob = new JenkinsJob(
+		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		JenkinsJob[] sortedJobs = sort(
+		ContinuousIntegrationJob[] sortedJobs = sort(
 			successJob, abortedJob, unstableJob, failedJob);
 
 		assertThat(
@@ -153,15 +153,15 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare6() {
-		JenkinsJob successJob1 = new JenkinsJob(
+		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
 			"successJobName1", "successJob1",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob successJob2 = new JenkinsJob(
+		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
 			"successJobName2", "successJob2",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob[] sortedJobs = sort(successJob1, successJob2);
+		ContinuousIntegrationJob[] sortedJobs = sort(successJob1, successJob2);
 
 		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
 		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
@@ -169,21 +169,21 @@ public class JenkinsJobTest {
 
 	@Test
 	public void testCompare7() {
-		JenkinsJob successJob1 = new JenkinsJob(
+		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
 			"successJobName1", "successJob1",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob successJob2 = new JenkinsJob(
+		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
 			"successJobName2", "successJob2",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
-		JenkinsJob[] sortedJobs = sort(successJob2, successJob1);
+		ContinuousIntegrationJob[] sortedJobs = sort(successJob2, successJob1);
 
 		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
 		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
 	}
 
-	protected JenkinsJob[] sort(JenkinsJob... jobs) {
+	protected ContinuousIntegrationJob[] sort(ContinuousIntegrationJob... jobs) {
 		Arrays.sort(jobs);
 
 		return jobs;

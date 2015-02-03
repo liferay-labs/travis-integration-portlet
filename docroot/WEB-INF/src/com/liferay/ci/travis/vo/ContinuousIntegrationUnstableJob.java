@@ -14,15 +14,15 @@
 
 package com.liferay.ci.travis.vo;
 
-public class JenkinsUnstableJob extends JenkinsJob {
+public class ContinuousIntegrationUnstableJob extends ContinuousIntegrationJob {
 
-	public JenkinsUnstableJob(
+	public ContinuousIntegrationUnstableJob(
 		String jobName, String alias, String lastBuildStatus) {
 
 		this(jobName, alias, lastBuildStatus, 0);
 	}
 
-	public JenkinsUnstableJob(
+	public ContinuousIntegrationUnstableJob(
 		String jobName, String alias, String lastBuildStatus,
 		int failedTestCount) {
 
