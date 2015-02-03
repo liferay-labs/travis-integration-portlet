@@ -22,9 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.liferay.ci.travis.vo.JenkinsBuild;
-import com.liferay.ci.travis.vo.JenkinsJob;
-import com.liferay.ci.travis.vo.JenkinsUnstableJob;
+import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
+import com.liferay.ci.travis.vo.ContinuousIntegrationJob;
+import com.liferay.ci.travis.vo.ContinuousIntegrationUnstableJob;
 import com.liferay.ci.portlet.TravisIntegrationConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,7 +73,7 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	public static JenkinsBuild getLastBuild(
+	public static ContinuousIntegrationBuild getLastBuild(
 			AuthConnectionParams connectionParams, String jobName)
 		throws IOException, JSONException {
 
@@ -95,7 +95,7 @@ public class JenkinsConnectUtil {
 		JSONObject lastBuild = getPreviousBuild(
 			lastCompletedBuild, lastFailedBuild);
 
-		JenkinsBuild result = null;
+		ContinuousIntegrationBuild result = null;
 
 		try {
 			result = getService(connectionParams).getLastBuild(lastBuild);
@@ -109,11 +109,12 @@ public class JenkinsConnectUtil {
 		return result;
 	}
 
-	public static JenkinsJob[] getLastBuilds(
+	public static ContinuousIntegrationJob[] getLastBuilds(
 			AuthConnectionParams connectionParams, String... jobNames)
 		throws IOException, JSONException {
 
-		JenkinsJob[] result = new JenkinsJob[jobNames.length];
+		ContinuousIntegrationJob[] result =
+			new ContinuousIntegrationJob[jobNames.length];
 
 		for (int i = 0; i < jobNames.length; i++) {
 			String fullJobName = jobNames[i];
@@ -137,18 +138,18 @@ public class JenkinsConnectUtil {
 				jobAlias = fullJobName;
 			}
 
-
-			JenkinsBuild lastBuild = getLastBuild(connectionParams, jobName);
+			ContinuousIntegrationBuild lastBuild =
+				getLastBuild(connectionParams, jobName);
 
 			if (lastBuild.getStatus().equals(
 				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 
-				result[i] = new JenkinsUnstableJob(
+				result[i] = new ContinuousIntegrationUnstableJob(
 					jobName, jobAlias, lastBuild.getStatus(),
 					lastBuild.getFailedTests());
 			}
 			else {
-				result[i] = new JenkinsJob(
+				result[i] = new ContinuousIntegrationJob(
 					jobName, jobAlias, lastBuild.getStatus());
 			}
 		}

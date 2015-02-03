@@ -20,9 +20,12 @@ import com.liferay.ci.portlet.TravisIntegrationConstants;
 /**
  * @author Manuel de la Peña
  */
-public class JenkinsJob implements Comparable<JenkinsJob>{
+public class ContinuousIntegrationJob
+	implements Comparable<ContinuousIntegrationJob>{
 
-	public JenkinsJob(String jobName, String alias, String lastBuildStatus) {
+	public ContinuousIntegrationJob(
+		String jobName, String alias, String lastBuildStatus) {
+
 		this.jobAlias = alias;
 		this.jobName = jobName;
 		this.lastBuildStatus = lastBuildStatus;
@@ -48,7 +51,7 @@ public class JenkinsJob implements Comparable<JenkinsJob>{
 	}
 
 	@Override
-	public int compareTo(JenkinsJob that) {
+	public int compareTo(ContinuousIntegrationJob that) {
 		if (this.internalLastBuildStatus > that.internalLastBuildStatus) {
 			return 1;
 		}

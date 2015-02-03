@@ -19,9 +19,9 @@ import java.net.URL;
 /**
  * @author Cristina González
  */
-public class JenkinsBuild {
+public class ContinuousIntegrationBuild {
 
-	public JenkinsBuild(int number, URL url) {
+	public ContinuousIntegrationBuild(int number, URL url) {
 		_number = number;
 		_url = url;
 	}

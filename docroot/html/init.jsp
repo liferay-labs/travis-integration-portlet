@@ -24,11 +24,11 @@
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ci.travis.action.ConfigurationValidator" %><%@
-page import="com.liferay.ci.travis.vo.JenkinsJob" %><%@
-page import="com.liferay.ci.travis.vo.JenkinsUnstableJob" %><%@
+page import="com.liferay.ci.travis.vo.ContinuousIntegrationJob" %><%@
+page import="com.liferay.ci.travis.vo.ContinuousIntegrationUnstableJob" %><%@
 page import="com.liferay.ci.json.JSONUtil" %><%@
 page import="com.liferay.ci.portlet.TravisIntegrationConstants" %><%@
-page import="com.liferay.ci.travis.vo.JenkinsBuild" %>
+page import="com.liferay.ci.travis.vo.ContinuousIntegrationBuild" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@

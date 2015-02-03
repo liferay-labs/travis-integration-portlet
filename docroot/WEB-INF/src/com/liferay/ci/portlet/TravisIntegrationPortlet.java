@@ -21,7 +21,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.liferay.ci.travis.vo.JenkinsBuild;
+import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -29,7 +29,7 @@ import com.liferay.ci.http.AuthConnectionParams;
 import com.liferay.ci.http.JenkinsConnectUtil;
 import com.liferay.ci.travis.action.ConfigurationValidator;
 import com.liferay.ci.travis.cache.LiferayJenkinsBuildCache;
-import com.liferay.ci.travis.vo.JenkinsJob;
+import com.liferay.ci.travis.vo.ContinuousIntegrationJob;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -97,7 +97,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			portletPreferences);
 
 		try {
-			JenkinsBuild lastBuild = JenkinsConnectUtil.getLastBuild(
+			ContinuousIntegrationBuild lastBuild = JenkinsConnectUtil.getLastBuild(
 					connectionParams, jobName);
 
 			request.setAttribute(
@@ -135,7 +135,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			portletPreferences);
 
 		try {
-			JenkinsJob[] lastBuilds =
+			ContinuousIntegrationJob[] lastBuilds =
 				JenkinsConnectUtil.getLastBuilds(connectionParams, jobNames);
 
 			request.setAttribute("JENKINS_JOBS", lastBuilds);
