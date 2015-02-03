@@ -48,9 +48,9 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 	<aui:fieldset label="builds-view-configuration">
-		<liferay-ui:error key="baseApiURLError" message="please-enter-a-valid-base-api-url" />
-
-		<aui:input cssClass="lfr-input-text-container" label="base-api-url" name="preferences--baseapiurl--" type="text" value="<%= baseApiURL %>" />
+		<div class="alert alert-info">
+			Travis-CI API URL is set to <%= baseApiURL %>
+		</div>
 
 		<aui:input cssClass="lfr-input-text-container" label="job-name" name="preferences--jobname--" type="text" value="<%= jobName %>" />
 
