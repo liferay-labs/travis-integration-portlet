@@ -17,15 +17,15 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-String lastBuildStatus = GetterUtil.getString(request.getAttribute("LAST_BUILD_STATUS"), StringPool.BLANK);
+int lastBuildStatus = GetterUtil.getInteger(request.getAttribute("LAST_BUILD_STATUS"), StringPool.BLANK);
 
 String image = "brokenbuild";
 String cssClass = "bottom";
 
-if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS)) {
+if (lastBuildStatus == TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS) {
 	image = "everythingisok";
 }
-else if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+else if (lastBuildStatus == TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE) {
 	image = "failingtestprincipal";
 
 	cssClass = "top";

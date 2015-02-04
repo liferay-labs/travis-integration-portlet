@@ -32,7 +32,7 @@ public class TravisIntegrationConstants {
 
 	public static final String JENKINS_BUILD_STATUS_NULL = "null";
 
-	public static final String JENKINS_BUILD_STATUS_SUCCESS = "SUCCESS";
+	public static final String BUILD_STATUS_SUCCESS = "SUCCESS";
 
 	public static final int TRAVIS_BUILD_STATUS_PENDING = -1;
 
