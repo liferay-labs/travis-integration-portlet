@@ -17,7 +17,7 @@ package com.liferay.ci.travis.processor;
 /**
  * @author Manuel de la Peña
  */
-public abstract class AbstractJenkinsJobNameProcessor
-	implements JenkinsJobNameProcessor {
+public abstract class AbstractContinuousIntegrationJobNameProcessor
+	implements ContinuousIntegrationJobNameProcessor {
 
 }

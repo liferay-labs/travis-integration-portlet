@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@page import="com.liferay.ci.travis.processor.JenkinsJobNameProcessorUtil"%>
+<%@page import="com.liferay.ci.travis.processor.ContinuousIntegrationJobNameProcessorUtil"%>
 <%@ include file="/html/init.jsp" %>
 
 <%
 String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 
-jobName = JenkinsJobNameProcessorUtil.process(jobName);
+jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
 
 String jobURL = baseApiURL + "/job/" + jobName;
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));

@@ -25,7 +25,7 @@ import com.liferay.ci.portlet.TravisIntegrationConstants;
 /**
  * @author Manuel de la Peña
  */
-public class JenkinsJobTest {
+public class ContinuousIntegrationJobTest {
 
 	@Test
 	public void testCompare1() {
@@ -103,7 +103,8 @@ public class JenkinsJobTest {
 			"failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
-		ContinuousIntegrationJob[] sortedJobs = sort(failedJob, successJob, unstableJob);
+		ContinuousIntegrationJob[] sortedJobs = sort(
+			failedJob, successJob, unstableJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
@@ -183,7 +184,9 @@ public class JenkinsJobTest {
 		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
 	}
 
-	protected ContinuousIntegrationJob[] sort(ContinuousIntegrationJob... jobs) {
+	protected ContinuousIntegrationJob[] sort(
+		ContinuousIntegrationJob... jobs) {
+
 		Arrays.sort(jobs);
 
 		return jobs;

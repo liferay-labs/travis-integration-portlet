@@ -22,42 +22,46 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public class JenkinsJobNameProcessorUtilTest {
+public class ContinuousIntegrationJobNameProcessorUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		JenkinsJobNameProcessorUtil.setProcessor(
+		ContinuousIntegrationJobNameProcessorUtil.setProcessor(
 			new DefaultJobNameProcessorImpl());
 	}
 
 	@Test
 	public void testProcess() throws Exception {
-		String actualJobName = JenkinsJobNameProcessorUtil.process(
-			"jobnamewitnodashes");
+		String actualJobName =
+			ContinuousIntegrationJobNameProcessorUtil.process(
+				"jobnamewitnodashes");
 
 		assertThat(actualJobName).isEqualTo("jobnamewitnodashes");
 	}
 
 	@Test
 	public void testProcessWithDashes() throws Exception {
-		String actualJobName = JenkinsJobNameProcessorUtil.process(
-			"job-name-with-dashes");
+		String actualJobName =
+			ContinuousIntegrationJobNameProcessorUtil.process(
+				"job-name-with-dashes");
 
 		assertThat(actualJobName).isEqualTo("job name with dashes");
 	}
 
 	@Test
 	public void testProcessWithDashesAndLiferay() throws Exception {
-		String actualJobName = JenkinsJobNameProcessorUtil.process(
-			"liferay-job-name-with-no-dashes");
+		String actualJobName =
+			ContinuousIntegrationJobNameProcessorUtil.process(
+				"liferay-job-name-with-no-dashes");
 
 		assertThat(actualJobName).isEqualTo("jobnamewithnodashes");
 	}
 
 	@Test
 	public void testProcessWithLiferay() throws Exception {
-		String actualJobName = JenkinsJobNameProcessorUtil.process(
-			"liferayjobnamewithnodashes");
+		String actualJobName =
+			ContinuousIntegrationJobNameProcessorUtil.process(
+				"liferayjobnamewithnodashes");
 
 		assertThat(actualJobName).isEqualTo("jobnamewithnodashes");
 	}

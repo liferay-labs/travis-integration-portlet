@@ -14,7 +14,7 @@
 
 package com.liferay.ci.travis.vo;
 
-import com.liferay.ci.travis.processor.JenkinsJobNameProcessorUtil;
+import com.liferay.ci.travis.processor.ContinuousIntegrationJobNameProcessorUtil;
 import com.liferay.ci.portlet.TravisIntegrationConstants;
 
 /**
@@ -69,7 +69,7 @@ public class ContinuousIntegrationJob
 
 	public String getJobName() {
 		try {
-			return JenkinsJobNameProcessorUtil.process(jobName);
+			return ContinuousIntegrationJobNameProcessorUtil.process(jobName);
 		}
 		catch (Exception e) {
 			return jobName;
