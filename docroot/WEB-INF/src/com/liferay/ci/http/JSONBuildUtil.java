@@ -40,9 +40,7 @@ public class JSONBuildUtil {
 			String jobName, int maxNumber)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, account, jobName);
-
-		JSONArray builds = (JSONArray)json.get("builds");
+		JSONArray builds = getJob(connectionParams, account, jobName);
 
 		JSONArray result = new JSONArray();
 
@@ -56,10 +54,10 @@ public class JSONBuildUtil {
 			JSONObject build = (JSONObject)builds.get(i);
 
 			try {
-				JSONObject testReport = getBuildTestReport(
+				JSONArray testReport = getBuildTestReport(
 					connectionParams, build);
 
-				testReport.append("buildNumber", build.getInt("number"));
+				//testReport.append("buildNumber", build.getInt("number"));
 
 				result.put(testReport);
 			}
@@ -78,19 +76,18 @@ public class JSONBuildUtil {
 			String jobName)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, account, jobName);
+		JSONArray builds = getJob(connectionParams, account, jobName);
 
 		// last completed build
 
-		JSONObject lastCompletedBuild = (JSONObject)json.get(
-			"lastCompletedBuild");
+		JSONObject lastCompletedBuild = (JSONObject)builds.get(0);
 
 		// last failed build
 
 		JSONObject lastFailedBuild = null;
 
-		if (!json.isNull("lastFailedBuild")) {
-			lastFailedBuild = (JSONObject)json.get("lastFailedBuild");
+		if (!builds.isNull(0)) {
+			lastFailedBuild = (JSONObject)builds.get(0);
 		}
 
 		JSONObject lastBuild = getPreviousBuild(
@@ -151,14 +148,14 @@ public class JSONBuildUtil {
 	private JSONBuildUtil() {
 	}
 
-	private static JSONObject getBuildTestReport(
+	private static JSONArray getBuildTestReport(
 			AuthConnectionParams connectionParams, JSONObject build)
 		throws IOException, JSONException {
 
 		return getService(connectionParams).getBuildTestReport(build);
 	}
 
-	private static JSONObject getJob(
+	private static JSONArray getJob(
 			AuthConnectionParams connectionParams, String account, String jobName)
 		throws IOException, JSONException {
 
