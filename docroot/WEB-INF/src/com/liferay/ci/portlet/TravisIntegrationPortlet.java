@@ -21,6 +21,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.travis.util.PortletPropsUtil;
 import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
 import org.json.JSONException;
 
@@ -94,8 +96,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 		_log.debug("Getting builds for " + jobName);
 
-		AuthConnectionParams connectionParams = getConnectionParams(
-			portletPreferences);
+		AuthConnectionParams connectionParams = getConnectionParams();
 
 		try {
 			ContinuousIntegrationBuild lastBuild = JSONBuildUtil.getLastBuild(
@@ -128,8 +129,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		String jobNamesParam = portletPreferences.getValue(
 			"jobnames", StringPool.BLANK);
 
-		AuthConnectionParams connectionParams = getConnectionParams(
-			portletPreferences);
+		AuthConnectionParams connectionParams = getConnectionParams();
 
 		try {
 			ContinuousIntegrationJob[] jobs = parseJobNames(jobNamesParam);
@@ -149,11 +149,8 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		}
 	}
 
-	protected AuthConnectionParams getConnectionParams(
-		PortletPreferences portletPreferences) {
-
-		String url = portletPreferences.getValue(
-			"baseapiurl", StringPool.BLANK);
+	protected AuthConnectionParams getConnectionParams() {
+		String url = PortletPropsUtil.get(PortletPropsKeys.TRAVIS_BASE_API_URL);
 
 		return new AuthConnectionParams(url);
 	}
