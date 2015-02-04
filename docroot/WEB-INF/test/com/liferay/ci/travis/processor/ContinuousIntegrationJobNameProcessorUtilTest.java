@@ -16,16 +16,31 @@ package com.liferay.ci.travis.processor;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.util.PortletPropsUtil;
+import com.liferay.ci.util.TestPropsUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({PortletPropsUtil.class})
 public class ContinuousIntegrationJobNameProcessorUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		PowerMockito.mockStatic(PortletPropsUtil.class);
+
+		TestPropsUtil.mockPortletKey(PortletPropsKeys.TRAVIS_BASE_API_URL);
+		TestPropsUtil.mockPortletKey(
+			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
+
 		ContinuousIntegrationJobNameProcessorUtil.setProcessor(
 			new DefaultJobNameProcessorImpl());
 	}
@@ -52,9 +67,9 @@ public class ContinuousIntegrationJobNameProcessorUtilTest {
 	public void testProcessWithDashesAndLiferay() throws Exception {
 		String actualJobName =
 			ContinuousIntegrationJobNameProcessorUtil.process(
-				"liferay-job-name-with-no-dashes");
+				"liferay-job-name-with-dashes");
 
-		assertThat(actualJobName).isEqualTo("jobnamewithnodashes");
+		assertThat(actualJobName).isEqualTo("job name with dashes");
 	}
 
 	@Test

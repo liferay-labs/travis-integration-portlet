@@ -165,11 +165,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare6() {
 		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
-			"successJobName1", "successJob1",
+			"successJobName1", "successAliasJob1",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
-			"successJobName2", "successJob2",
+			"successJobName2", "successAliasJob2",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob1, successJob2);
@@ -180,8 +180,8 @@ public class ContinuousIntegrationJobTest {
 		TestPropsUtil.mockPortletKey(
 			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
 
-		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
-		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
+		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJobName1");
+		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJobName2");
 	}
 
 	@Test
@@ -202,8 +202,8 @@ public class ContinuousIntegrationJobTest {
 		TestPropsUtil.mockPortletKey(
 			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
 
-		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
-		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
+		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJobName1");
+		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJobName2");
 	}
 
 	protected ContinuousIntegrationJob[] sort(
