@@ -14,7 +14,6 @@
 
 package com.liferay.ci.http;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -66,31 +65,14 @@ public class JSONBuildUtil {
 
 		JSONArray builds = getJob(connectionParams, account, jobName);
 
-		// last completed build
+		// last build
 
-		JSONObject lastCompletedBuild = (JSONObject)builds.get(0);
+		JSONObject lastBuild = (JSONObject)builds.get(0);
 
-		// last failed build
+		ContinuousIntegrationBuild result = new ContinuousIntegrationBuild(
+			lastBuild.getInt("id"));
 
-		JSONObject lastFailedBuild = null;
-
-		if (!builds.isNull(0)) {
-			lastFailedBuild = (JSONObject)builds.get(0);
-		}
-
-		JSONObject lastBuild = getPreviousBuild(
-			lastCompletedBuild, lastFailedBuild);
-
-		ContinuousIntegrationBuild result = null;
-
-		try {
-			result = getService(connectionParams).getLastBuild(lastBuild);
-		}
-		catch(FileNotFoundException fnfe) {
-			_log.warn(
-				"The build " + lastBuild.getInt("number") + " is not present",
-				fnfe);
-		}
+		result.setStatus(lastBuild.getInt("result"));
 
 		return result;
 	}
@@ -140,24 +122,6 @@ public class JSONBuildUtil {
 		throws IOException, JSONException {
 
 		return getService(connectionParams).getJob(account, jobName);
-	}
-
-	private static JSONObject getPreviousBuild(
-			JSONObject lastCompleted, JSONObject lastFailed)
-		throws JSONException {
-
-		int lastCompletedBuildNumber = lastCompleted.getInt("number");
-		int lastFailedBuildNumber  = 0;
-
-		if (lastFailed != null) {
-			lastFailedBuildNumber = lastFailed.getInt("number");
-		}
-
-		if (lastCompletedBuildNumber > lastFailedBuildNumber) {
-			return lastCompleted;
-		}
-
-		return lastFailed;
 	}
 
 	private static TravisConnectImpl getService(
