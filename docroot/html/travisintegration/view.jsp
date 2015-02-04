@@ -39,11 +39,11 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 					<c:choose>
 						<c:when test="<%= hasConfigurationPermission %>">
 							<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-								<liferay-ui:message key="please-configure-this-portlet-to-display-jenkins-build-information" />
+								<liferay-ui:message key="please-configure-this-portlet-to-display-travis-build-information" />
 							</a>
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message key="please-configure-this-portlet-to-display-jenkins-build-information" />
+							<liferay-ui:message key="please-configure-this-portlet-to-display-travis-build-information" />
 						</c:otherwise>
 					</c:choose>
 				</span>
