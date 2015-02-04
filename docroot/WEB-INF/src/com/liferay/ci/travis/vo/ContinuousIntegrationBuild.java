@@ -26,10 +26,6 @@ public class ContinuousIntegrationBuild {
 		_url = url;
 	}
 
-	public int getFailedTests() {
-		return _failedTests;
-	}
-
 	public int getNumber() {
 		return _number;
 	}
@@ -40,10 +36,6 @@ public class ContinuousIntegrationBuild {
 
 	public URL getUrl() {
 		return _url;
-	}
-
-	public void setFailedTests(int failedTests) {
-		_failedTests = failedTests;
 	}
 
 	public void setNumber(int number) {
@@ -59,7 +51,6 @@ public class ContinuousIntegrationBuild {
 	}
 
 	private int _number;
-	private int _failedTests;
 	private int _status;
 	private URL _url;
 

@@ -115,8 +115,7 @@ public class JSONBuildUtil {
 				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
 
 				result[i] = new ContinuousIntegrationUnstableJob(
-					jobAccount, jobName, jobAlias, lastBuild.getStatus(),
-					lastBuild.getFailedTests());
+					jobAccount, jobName, jobAlias, lastBuild.getStatus());
 			}
 			else {
 				result[i] = new ContinuousIntegrationJob(

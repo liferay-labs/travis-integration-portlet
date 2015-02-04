@@ -52,12 +52,6 @@ public class TravisConnectImpl extends BaseConnectImpl {
 
 		String resultString = String.valueOf(result);
 
-		if (resultString.equals(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
-
-			continuousIntegrationBuild.setFailedTests(9999);
-		}
-
 		continuousIntegrationBuild.setNumber(buildNumber);
 		continuousIntegrationBuild.setStatus(Integer.valueOf(resultString));
 		continuousIntegrationBuild.setUrl(new URL(buildURL));
