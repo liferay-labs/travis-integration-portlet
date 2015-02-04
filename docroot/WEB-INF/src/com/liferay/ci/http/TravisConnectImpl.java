@@ -36,20 +36,6 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		super();
 	}
 
-	public JSONArray getBuildTestReport(JSONObject build)
-		throws IOException, JSONException {
-
-		String buildURL = (String)build.get("url");
-
-		return getBuildTestReport(buildURL);
-	}
-
-	public JSONArray getBuildTestReport(String url)
-		throws IOException, JSONException {
-
-		return _get(url + "testReport/", false);
-	}
-
 	public ContinuousIntegrationBuild getLastBuild(JSONObject build)
 		throws IOException, JSONException {
 
@@ -69,13 +55,7 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		if (resultString.equals(
 				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 
-			JSONArray buildTestReport = getBuildTestReport(buildURL);
-
-			// retrieve number of broken tests for last build
-
-			int failedTests = buildTestReport.getInt(0);
-
-			continuousIntegrationBuild.setFailedTests(failedTests);
+			continuousIntegrationBuild.setFailedTests(9999);
 		}
 
 		continuousIntegrationBuild.setNumber(buildNumber);

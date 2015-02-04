@@ -52,20 +52,6 @@ public class JSONBuildUtil {
 
 		for (int i = 0; i < end; i++) {
 			JSONObject build = (JSONObject)builds.get(i);
-
-			try {
-				JSONArray testReport = getBuildTestReport(
-					connectionParams, build);
-
-				//testReport.append("buildNumber", build.getInt("number"));
-
-				result.put(testReport);
-			}
-			catch(FileNotFoundException fnfe) {
-				_log.warn(
-					"The build " + build.getInt("number") + " is not present",
-					fnfe);
-			}
 		}
 
 		return result;
@@ -146,13 +132,6 @@ public class JSONBuildUtil {
 	}
 
 	private JSONBuildUtil() {
-	}
-
-	private static JSONArray getBuildTestReport(
-			AuthConnectionParams connectionParams, JSONObject build)
-		throws IOException, JSONException {
-
-		return getService(connectionParams).getBuildTestReport(build);
 	}
 
 	private static JSONArray getJob(
