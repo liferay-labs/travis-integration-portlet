@@ -36,11 +36,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class JSONBuildUtil {
 
 	public static JSONArray getBuilds(
-			AuthConnectionParams connectionParams, String jobName,
-			int maxNumber)
+			AuthConnectionParams connectionParams, String account,
+			String jobName, int maxNumber)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, jobName);
+		JSONObject json = getJob(connectionParams, account, jobName);
 
 		JSONArray builds = (JSONArray)json.get("builds");
 
@@ -74,10 +74,11 @@ public class JSONBuildUtil {
 	}
 
 	public static ContinuousIntegrationBuild getLastBuild(
-			AuthConnectionParams connectionParams, String jobName)
+			AuthConnectionParams connectionParams, String account,
+			String jobName)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, jobName);
+		JSONObject json = getJob(connectionParams, account, jobName);
 
 		// last completed build
 
@@ -110,47 +111,33 @@ public class JSONBuildUtil {
 	}
 
 	public static ContinuousIntegrationJob[] getLastBuilds(
-			AuthConnectionParams connectionParams, String... jobNames)
+			AuthConnectionParams connectionParams,
+			ContinuousIntegrationJob... jobs)
 		throws IOException, JSONException {
 
 		ContinuousIntegrationJob[] result =
-			new ContinuousIntegrationJob[jobNames.length];
+			new ContinuousIntegrationJob[jobs.length];
 
-		for (int i = 0; i < jobNames.length; i++) {
-			String fullJobName = jobNames[i];
+		System.arraycopy(jobs, 0, result, 0, jobs.length);
 
-			String[] jobNameArray = fullJobName.split("\\|");
-
-			String jobName;
-			String jobAlias;
-
-			if (jobNameArray.length > 2) {
-				_log.warn("Job name uses invalidad format: " + fullJobName);
-
-				continue;
-			}
-			else if (jobNameArray.length == 2) {
-				jobName = jobNameArray[0];
-				jobAlias = jobNameArray[1];
-			}
-			else {
-				jobName = fullJobName;
-				jobAlias = fullJobName;
-			}
+		for (int i = 0; i < result.length; i++) {
+			String jobAccount = result[i].getAccount();
+			String jobName = result[i].getJobName();
+			String jobAlias = result[i].getJobAlias();
 
 			ContinuousIntegrationBuild lastBuild =
-				getLastBuild(connectionParams, jobName);
+				getLastBuild(connectionParams, jobAccount, jobName);
 
 			if (lastBuild.getStatus().equals(
 				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 
 				result[i] = new ContinuousIntegrationUnstableJob(
-					jobName, jobAlias, lastBuild.getStatus(),
+					jobAccount, jobName, jobAlias, lastBuild.getStatus(),
 					lastBuild.getFailedTests());
 			}
 			else {
 				result[i] = new ContinuousIntegrationJob(
-					jobName, jobAlias, lastBuild.getStatus());
+					jobAccount, jobName, jobAlias, lastBuild.getStatus());
 			}
 		}
 
@@ -172,10 +159,10 @@ public class JSONBuildUtil {
 	}
 
 	private static JSONObject getJob(
-			AuthConnectionParams connectionParams, String jobName)
+			AuthConnectionParams connectionParams, String account, String jobName)
 		throws IOException, JSONException {
 
-		return getService(connectionParams).getJob(jobName);
+		return getService(connectionParams).getJob(account, jobName);
 	}
 
 	private static JSONObject getPreviousBuild(
