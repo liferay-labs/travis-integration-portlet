@@ -25,11 +25,6 @@ String cssClass = "bottom";
 if (lastBuildStatus == TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS) {
 	image = "everythingisok";
 }
-else if (lastBuildStatus == TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE) {
-	image = "failingtestprincipal";
-
-	cssClass = "top";
-}
 %>
 
 <div class="logo-container <%= cssClass %>">

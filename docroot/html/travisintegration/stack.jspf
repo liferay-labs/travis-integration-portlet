@@ -25,7 +25,7 @@ ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getOb
 for (ContinuousIntegrationJob ciJob : ciJobs) {
 	int status = ciJob.getLastBuildStatus();
 
-	String buildStatus = TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE;
+	String buildStatus = TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE;
 
 	if (status == TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS) {
 		buildStatus = TravisIntegrationConstants.BUILD_STATUS_SUCCESS;
