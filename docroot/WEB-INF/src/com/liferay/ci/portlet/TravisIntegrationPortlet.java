@@ -88,6 +88,9 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 	protected void buildLights(RenderRequest request) {
 		PortletPreferences portletPreferences = request.getPreferences();
 
+		String account = portletPreferences.getValue(
+			"account", StringPool.BLANK);
+
 		String jobName = portletPreferences.getValue(
 			"jobname", StringPool.BLANK);
 
@@ -98,7 +101,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 		try {
 			ContinuousIntegrationBuild lastBuild = JSONBuildUtil.getLastBuild(
-				connectionParams, jobName);
+				connectionParams, account, jobName);
 
 			request.setAttribute(
 				"LAST_BUILD_STATUS", lastBuild.getStatus());
@@ -128,15 +131,14 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		String jobNamesParam = portletPreferences.getValue(
 			"jobnames", StringPool.BLANK);
 
-		String[] jobNames = StringUtil.split(
-			jobNamesParam, StringPool.NEW_LINE);
-
 		AuthConnectionParams connectionParams = getConnectionParams(
 			portletPreferences);
 
 		try {
+			ContinuousIntegrationJob[] jobs = getJobs(jobNamesParam);
+
 			ContinuousIntegrationJob[] lastBuilds =
-				JSONBuildUtil.getLastBuilds(connectionParams, jobNames);
+				JSONBuildUtil.getLastBuilds(connectionParams, jobs);
 
 			request.setAttribute("JENKINS_JOBS", lastBuilds);
 		}
@@ -154,6 +156,9 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		PortletPreferences portletPreferences = request.getPreferences();
 
 		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+		String account = portletPreferences.getValue(
+			"account", StringPool.BLANK);
 
 		String jobName = portletPreferences.getValue(
 			"jobname", StringPool.BLANK);
@@ -178,7 +183,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 			if (!_cache.containsKey(portletId, jobCacheKey)) {
 				JSONArray testResults = JSONBuildUtil.getBuilds(
-					getConnectionParams(portletPreferences), jobName,
+					getConnectionParams(portletPreferences), account, jobName,
 					maxBuildNumber);
 
 				_cache.put(portletId, jobCacheKey, testResults);
@@ -204,6 +209,43 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			"baseapiurl", StringPool.BLANK);
 
 		return new AuthConnectionParams(url);
+	}
+
+	protected ContinuousIntegrationJob[] getJobs(String jobNamesParam) {
+		String[] jobNames = StringUtil.split(jobNamesParam, StringPool.NEW_LINE);
+
+		ContinuousIntegrationJob[] jobs =
+			new ContinuousIntegrationJob[jobNames.length];
+
+		for (int i = 0; i < jobNames.length; i++) {
+			String fullJobName = jobNames[i];
+
+			String[] jobNameArray = fullJobName.split("\\|");
+
+			String jobAccount;
+			String jobName;
+			String jobAlias;
+
+			if (jobNameArray.length > 3) {
+				_log.warn("Job name uses invalid format: " + fullJobName);
+
+				continue;
+			} else if (jobNameArray.length == 3) {
+				jobAccount = jobNameArray[0];
+				jobName = jobNameArray[1];
+				jobAlias = jobNameArray[2];
+			} else {
+				jobAccount = fullJobName;
+				jobName = fullJobName;
+				jobAlias = fullJobName;
+			}
+
+			jobs[i] = new ContinuousIntegrationJob(
+				jobAccount, jobName, jobAlias,
+				TravisIntegrationConstants.JENKINS_BUILD_STATUS_NULL);
+		}
+
+		return jobs;
 	}
 
 	private static LiferayJenkinsBuildCache _cache;
