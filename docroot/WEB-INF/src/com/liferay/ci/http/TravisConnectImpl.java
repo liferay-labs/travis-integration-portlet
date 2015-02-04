@@ -83,12 +83,10 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		return continuousIntegrationBuild;
 	}
 
-	public JSONObject getJob(String jobName) throws IOException, JSONException {
-		return _get(getJobAPIURLSuffix(jobName));
-	}
+	public JSONObject getJob(String account, String jobName)
+		throws IOException, JSONException {
 
-	protected String getJobAPIURLSuffix(String jobName) {
-		return "/job/" + jobName + "/";
+		return _get("/repositories/" + account + "/" + jobName + "/builds");
 	}
 
 	public void setAuthConnectionParams(AuthConnectionParams connectionParams) {
