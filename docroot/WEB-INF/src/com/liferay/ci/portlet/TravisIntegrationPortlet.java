@@ -22,7 +22,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.liferay.ci.http.AuthConnectionParams;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -69,15 +66,16 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		if (configured) {
 			int viewMode = GetterUtil.getInteger(
 				portletPreferences.getValue("viewmode", null),
-				TravisIntegrationConstants.VIEW_MODE_SERIES);
+				TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS);
 
-			if (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) {
-				buildSeries(request);
-			}
-			else if (viewMode == TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS) {
+			if (viewMode ==
+				TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS) {
+
 				buildLights(request);
 			}
-			else if (viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK) {
+			else if (viewMode ==
+				TravisIntegrationConstants.VIEW_MODE_JOBS_STACK) {
+
 				buildProjectsStack(request);
 			}
 		}
@@ -87,6 +85,9 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 	protected void buildLights(RenderRequest request) {
 		PortletPreferences portletPreferences = request.getPreferences();
+
+		String account = portletPreferences.getValue(
+			"account", StringPool.BLANK);
 
 		String jobName = portletPreferences.getValue(
 			"jobname", StringPool.BLANK);
@@ -98,14 +99,13 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 		try {
 			ContinuousIntegrationBuild lastBuild = JSONBuildUtil.getLastBuild(
-				connectionParams, jobName);
+				connectionParams, account, jobName);
 
 			request.setAttribute(
 				"LAST_BUILD_STATUS", lastBuild.getStatus());
 
-			if (lastBuild.getStatus().equals(
-					TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)
-				) {
+			if (lastBuild.getStatus() ==
+					TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
 
 				// retrieve number of broken tests for last build
 
@@ -128,15 +128,14 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		String jobNamesParam = portletPreferences.getValue(
 			"jobnames", StringPool.BLANK);
 
-		String[] jobNames = StringUtil.split(
-			jobNamesParam, StringPool.NEW_LINE);
-
 		AuthConnectionParams connectionParams = getConnectionParams(
 			portletPreferences);
 
 		try {
+			ContinuousIntegrationJob[] jobs = parseJobNames(jobNamesParam);
+
 			ContinuousIntegrationJob[] lastBuilds =
-				JSONBuildUtil.getLastBuilds(connectionParams, jobNames);
+				JSONBuildUtil.getLastBuilds(connectionParams, jobs);
 
 			request.setAttribute("JENKINS_JOBS", lastBuilds);
 		}
@@ -150,53 +149,6 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void buildSeries(RenderRequest request) {
-		PortletPreferences portletPreferences = request.getPreferences();
-
-		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
-
-		String jobName = portletPreferences.getValue(
-			"jobname", StringPool.BLANK);
-
-		_log.debug("Getting builds for " + jobName);
-
-		String buildsNumber = portletPreferences.getValue(
-			"buildsnumber", StringPool.BLANK);
-
-		try {
-			int maxBuildNumber = 0;
-
-			if (Validator.isNotNull(buildsNumber)) {
-				maxBuildNumber = Integer.parseInt(buildsNumber);
-
-				_log.debug(
-					"Max BuildNumber for build: " + maxBuildNumber);
-			}
-
-			String jobCacheKey = jobName + StringPool.POUND +
-				buildsNumber;
-
-			if (!_cache.containsKey(portletId, jobCacheKey)) {
-				JSONArray testResults = JSONBuildUtil.getBuilds(
-					getConnectionParams(portletPreferences), jobName,
-					maxBuildNumber);
-
-				_cache.put(portletId, jobCacheKey, testResults);
-			}
-
-			request.setAttribute(
-				"TEST_RESULTS", _cache.get(portletId, jobCacheKey));
-		}
-		catch (IOException ioe) {
-			SessionErrors.add(request, ioe.getClass());
-
-			_log.error("The job was not available", ioe);
-		}
-		catch (JSONException e) {
-			_log.error("The job is not well-formed", e);
-		}
-	}
-
 	protected AuthConnectionParams getConnectionParams(
 		PortletPreferences portletPreferences) {
 
@@ -204,6 +156,43 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			"baseapiurl", StringPool.BLANK);
 
 		return new AuthConnectionParams(url);
+	}
+
+	protected ContinuousIntegrationJob[] parseJobNames(String jobNamesParam) {
+		String[] jobNames = StringUtil.split(jobNamesParam, StringPool.NEW_LINE);
+
+		ContinuousIntegrationJob[] jobs =
+			new ContinuousIntegrationJob[jobNames.length];
+
+		for (int i = 0; i < jobNames.length; i++) {
+			String fullJobName = jobNames[i];
+
+			String[] jobNameArray = fullJobName.split("\\|");
+
+			String jobAccount;
+			String jobName;
+			String jobAlias;
+
+			if (jobNameArray.length > 3) {
+				_log.warn("Job name uses invalid format: " + fullJobName);
+
+				continue;
+			} else if (jobNameArray.length == 3) {
+				jobAccount = jobNameArray[0];
+				jobName = jobNameArray[1];
+				jobAlias = jobNameArray[2];
+			} else {
+				jobAccount = fullJobName;
+				jobName = fullJobName;
+				jobAlias = fullJobName;
+			}
+
+			jobs[i] = new ContinuousIntegrationJob(
+				jobAccount, jobName, jobAlias,
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_PENDING);
+		}
+
+		return jobs;
 	}
 
 	private static LiferayJenkinsBuildCache _cache;

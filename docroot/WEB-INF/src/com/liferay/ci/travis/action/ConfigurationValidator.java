@@ -29,7 +29,8 @@ public class ConfigurationValidator {
 		int viewMode = GetterUtil.getInteger(
 			portletPreferences.getValue(
 				"viewmode",
-				String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
+				String.valueOf(
+					TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)));
 
 		if (viewMode != TravisIntegrationConstants.VIEW_MODE_JOBS_STACK) {
 			String jobName = GetterUtil.getString(

@@ -14,7 +14,6 @@
 
 package com.liferay.ci.http;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -36,13 +35,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class JSONBuildUtil {
 
 	public static JSONArray getBuilds(
-			AuthConnectionParams connectionParams, String jobName,
-			int maxNumber)
+			AuthConnectionParams connectionParams, String account,
+			String jobName, int maxNumber)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, jobName);
-
-		JSONArray builds = (JSONArray)json.get("builds");
+		JSONArray builds = _getJob(connectionParams, account, jobName);
 
 		JSONArray result = new JSONArray();
 
@@ -55,102 +52,58 @@ public class JSONBuildUtil {
 		for (int i = 0; i < end; i++) {
 			JSONObject build = (JSONObject)builds.get(i);
 
-			try {
-				JSONObject testReport = getBuildTestReport(
-					connectionParams, build);
-
-				testReport.append("buildNumber", build.getInt("number"));
-
-				result.put(testReport);
-			}
-			catch(FileNotFoundException fnfe) {
-				_log.warn(
-					"The build " + build.getInt("number") + " is not present",
-					fnfe);
-			}
+			result.put(build);
 		}
 
 		return result;
 	}
 
 	public static ContinuousIntegrationBuild getLastBuild(
-			AuthConnectionParams connectionParams, String jobName)
+			AuthConnectionParams connectionParams, String account,
+			String jobName)
 		throws IOException, JSONException {
 
-		JSONObject json = getJob(connectionParams, jobName);
+		JSONArray builds = _getJob(connectionParams, account, jobName);
 
-		// last completed build
+		// last build
 
-		JSONObject lastCompletedBuild = (JSONObject)json.get(
-			"lastCompletedBuild");
+		JSONObject lastBuild = (JSONObject)builds.get(0);
 
-		// last failed build
+		ContinuousIntegrationBuild result = new ContinuousIntegrationBuild(
+			lastBuild.getInt("id"));
 
-		JSONObject lastFailedBuild = null;
-
-		if (!json.isNull("lastFailedBuild")) {
-			lastFailedBuild = (JSONObject)json.get("lastFailedBuild");
-		}
-
-		JSONObject lastBuild = getPreviousBuild(
-			lastCompletedBuild, lastFailedBuild);
-
-		ContinuousIntegrationBuild result = null;
-
-		try {
-			result = getService(connectionParams).getLastBuild(lastBuild);
-		}
-		catch(FileNotFoundException fnfe) {
-			_log.warn(
-				"The build " + lastBuild.getInt("number") + " is not present",
-				fnfe);
-		}
+		result.setStatus(lastBuild.getInt("result"));
 
 		return result;
 	}
 
 	public static ContinuousIntegrationJob[] getLastBuilds(
-			AuthConnectionParams connectionParams, String... jobNames)
+			AuthConnectionParams connectionParams,
+			ContinuousIntegrationJob... jobs)
 		throws IOException, JSONException {
 
 		ContinuousIntegrationJob[] result =
-			new ContinuousIntegrationJob[jobNames.length];
+			new ContinuousIntegrationJob[jobs.length];
 
-		for (int i = 0; i < jobNames.length; i++) {
-			String fullJobName = jobNames[i];
+		System.arraycopy(jobs, 0, result, 0, jobs.length);
 
-			String[] jobNameArray = fullJobName.split("\\|");
-
-			String jobName;
-			String jobAlias;
-
-			if (jobNameArray.length > 2) {
-				_log.warn("Job name uses invalidad format: " + fullJobName);
-
-				continue;
-			}
-			else if (jobNameArray.length == 2) {
-				jobName = jobNameArray[0];
-				jobAlias = jobNameArray[1];
-			}
-			else {
-				jobName = fullJobName;
-				jobAlias = fullJobName;
-			}
+		for (int i = 0; i < result.length; i++) {
+			String jobAccount = result[i].getAccount();
+			String jobName = result[i].getJobName();
+			String jobAlias = result[i].getJobAlias();
 
 			ContinuousIntegrationBuild lastBuild =
-				getLastBuild(connectionParams, jobName);
+				getLastBuild(connectionParams, jobAccount, jobName);
 
-			if (lastBuild.getStatus().equals(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+			if (lastBuild.getStatus() ==
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
 
 				result[i] = new ContinuousIntegrationUnstableJob(
-					jobName, jobAlias, lastBuild.getStatus(),
-					lastBuild.getFailedTests());
+					jobAccount, jobName, jobAlias, lastBuild.getStatus());
 			}
 			else {
 				result[i] = new ContinuousIntegrationJob(
-					jobName, jobAlias, lastBuild.getStatus());
+					jobAccount, jobName, jobAlias, lastBuild.getStatus());
 			}
 		}
 
@@ -164,40 +117,15 @@ public class JSONBuildUtil {
 	private JSONBuildUtil() {
 	}
 
-	private static JSONObject getBuildTestReport(
-			AuthConnectionParams connectionParams, JSONObject build)
+	private static JSONArray _getJob(
+		AuthConnectionParams connectionParams, String account, String jobName)
 		throws IOException, JSONException {
 
-		return getService(connectionParams).getBuildTestReport(build);
+		return _getService(connectionParams).getJob(account, jobName);
 	}
 
-	private static JSONObject getJob(
-			AuthConnectionParams connectionParams, String jobName)
-		throws IOException, JSONException {
-
-		return getService(connectionParams).getJob(jobName);
-	}
-
-	private static JSONObject getPreviousBuild(
-			JSONObject lastCompleted, JSONObject lastFailed)
-		throws JSONException {
-
-		int lastCompletedBuildNumber = lastCompleted.getInt("number");
-		int lastFailedBuildNumber  = 0;
-
-		if (lastFailed != null) {
-			lastFailedBuildNumber = lastFailed.getInt("number");
-		}
-
-		if (lastCompletedBuildNumber > lastFailedBuildNumber) {
-			return lastCompleted;
-		}
-
-		return lastFailed;
-	}
-
-	private static TravisConnectImpl getService(
-			AuthConnectionParams connectionParams)
+	private static TravisConnectImpl _getService(
+		AuthConnectionParams connectionParams)
 		throws IOException {
 
 		if (_service == null) {

@@ -14,53 +14,32 @@
 
 package com.liferay.ci.travis.vo;
 
-import java.net.URL;
-
 /**
  * @author Cristina González
  */
 public class ContinuousIntegrationBuild {
 
-	public ContinuousIntegrationBuild(int number, URL url) {
+	public ContinuousIntegrationBuild(int number) {
 		_number = number;
-		_url = url;
-	}
-
-	public int getFailedTests() {
-		return _failedTests;
 	}
 
 	public int getNumber() {
 		return _number;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return _status;
-	}
-
-	public URL getUrl() {
-		return _url;
-	}
-
-	public void setFailedTests(int failedTests) {
-		_failedTests = failedTests;
 	}
 
 	public void setNumber(int number) {
 		_number = number;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		_status = status;
 	}
 
-	public void setUrl(URL url) {
-		_url = url;
-	}
-
 	private int _number;
-	private int _failedTests;
-	private String _status;
-	private URL _url;
+	private int _status;
 
 }

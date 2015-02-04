@@ -20,7 +20,7 @@ package com.liferay.ci.travis.util;
 public class PortletPropsKeys {
 
 	public static final String TRAVIS_BASE_API_URL =
-		"jenkins.baseapiurl";
+		"travis.baseapiurl";
 
 	public static final String JOB_NAME_PROCESSOR_CLASSNAME =
 		"job.name.processor.classname";

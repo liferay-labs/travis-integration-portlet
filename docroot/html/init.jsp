@@ -24,6 +24,7 @@
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ci.travis.action.ConfigurationValidator" %><%@
+page import="com.liferay.ci.travis.processor.ContinuousIntegrationJobNameProcessorUtil"%><%@
 page import="com.liferay.ci.travis.vo.ContinuousIntegrationJob" %><%@
 page import="com.liferay.ci.travis.vo.ContinuousIntegrationUnstableJob" %><%@
 page import="com.liferay.ci.json.JSONUtil" %><%@

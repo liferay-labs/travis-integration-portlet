@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Manuel de la Peña
  */
 public class DefaultJobNameProcessorImpl extends
-	AbstractJenkinsJobNameProcessor {
+	AbstractContinuousIntegrationJobNameProcessor {
 
 	@Override
 	public String process(String jobName) {

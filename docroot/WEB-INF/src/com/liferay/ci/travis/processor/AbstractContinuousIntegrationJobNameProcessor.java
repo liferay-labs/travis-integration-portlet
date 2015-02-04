@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.ci.travis.vo;
+package com.liferay.ci.travis.processor;
 
-public class ContinuousIntegrationUnstableJob extends ContinuousIntegrationJob {
-
-	public ContinuousIntegrationUnstableJob(
-		String account, String jobName, String alias, int lastBuildStatus) {
-
-		super(account, jobName, alias, lastBuildStatus);
-	}
+/**
+ * @author Manuel de la Peña
+ */
+public abstract class AbstractContinuousIntegrationJobNameProcessor
+	implements ContinuousIntegrationJobNameProcessor {
 
 }

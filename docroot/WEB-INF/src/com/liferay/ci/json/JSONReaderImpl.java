@@ -21,8 +21,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class JSONReaderImpl {
 		return sb.toString();
 	}
 
-	public static JSONObject readJSONFromURL(InputStream is)
+	public static JSONArray readJSONFromURL(InputStream is)
 		throws IOException, JSONException {
 
 		try {
@@ -51,9 +51,9 @@ public class JSONReaderImpl {
 
 			String jsonText = readAll(rd);
 
-			JSONObject json = new JSONObject(jsonText);
+			JSONArray jsonArray = new JSONArray(jsonText);
 
-			return json;
+			return jsonArray;
 		}
 		finally {
 			is.close();

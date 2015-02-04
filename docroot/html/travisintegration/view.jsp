@@ -14,16 +14,14 @@
  */
 --%>
 
-<%@page import="com.liferay.ci.travis.processor.JenkinsJobNameProcessorUtil"%>
 <%@ include file="/html/init.jsp" %>
 
 <%
-String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
+String account = GetterUtil.getString(portletPreferences.getValue("account", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 
-jobName = JenkinsJobNameProcessorUtil.process(jobName);
+jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
 
-String jobURL = baseApiURL + "/job/" + jobName;
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
 int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
@@ -55,9 +53,6 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 			<liferay-ui:error exception="<%= FileNotFoundException.class %>" message="the-job-could-not-be-retrieved-please-review-configuration" />
 
 			<c:choose>
-				<c:when test="<%= (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) %>">
-					<%@ include file="builds.jspf" %>
-				</c:when>
 				<c:when test="<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK)%>">
 					<%@ include file="stack.jspf" %>
 				</c:when>

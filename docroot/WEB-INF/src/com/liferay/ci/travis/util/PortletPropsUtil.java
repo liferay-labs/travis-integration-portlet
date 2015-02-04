@@ -12,12 +12,20 @@
  * details.
  */
 
-package com.liferay.ci.travis.processor;
+package com.liferay.ci.travis.util;
+
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.util.portlet.PortletProps;
 
 /**
+ * @author Cristina González
  * @author Manuel de la Peña
  */
-public abstract class AbstractJenkinsJobNameProcessor
-	implements JenkinsJobNameProcessor {
+public class PortletPropsUtil {
+
+	public static String get(String key) {
+		return GetterUtil.getString(PortletProps.get(key), StringPool.BLANK);
+	}
 
 }

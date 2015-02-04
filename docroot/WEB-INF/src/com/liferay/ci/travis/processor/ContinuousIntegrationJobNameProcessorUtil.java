@@ -17,14 +17,17 @@ package com.liferay.ci.travis.processor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.liferay.ci.travis.util.PortletPropsValues;
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.travis.util.PortletPropsUtil;
 
 /**
  * @author Manuel de la Peña
  */
-public class JenkinsJobNameProcessorUtil {
+public class ContinuousIntegrationJobNameProcessorUtil {
 
-	public static JenkinsJobNameProcessor getProcessor() throws Exception {
+	public static ContinuousIntegrationJobNameProcessor getProcessor()
+		throws Exception {
+
 		if (_processor == null) {
 			_initialize();
 		}
@@ -46,32 +49,36 @@ public class JenkinsJobNameProcessorUtil {
 		return _processedJobNames.get(jobName);
 	}
 
-	public static void setProcessor(JenkinsJobNameProcessor processor) {
+	public static void setProcessor(
+		ContinuousIntegrationJobNameProcessor processor) {
+
 		_processor = processor;
 	}
 
-	private JenkinsJobNameProcessorUtil() {
+	private ContinuousIntegrationJobNameProcessorUtil() {
 	}
 
 	private static void _initialize() throws Exception {
 		_processedJobNames = new HashMap<String, String>();
 
 		String processorClassName =
-			PortletPropsValues.JOB_NAME_PROCESSOR_CLASSNAME;
+			PortletPropsUtil.get(
+				PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
 
 		ClassLoader classLoader =
-			JenkinsJobNameProcessorUtil.class.getClassLoader();
+			ContinuousIntegrationJobNameProcessorUtil.class.getClassLoader();
 
 		Class<?> clazz = classLoader.loadClass(processorClassName);
 
-		_processor = (AbstractJenkinsJobNameProcessor)clazz.newInstance();
+		_processor =
+			(AbstractContinuousIntegrationJobNameProcessor)clazz.newInstance();
 
 		_initialized = true;
 	}
 
 	private static Map<String, String> _processedJobNames;
 
-	private static JenkinsJobNameProcessor _processor;
+	private static ContinuousIntegrationJobNameProcessor _processor;
 
 	private static boolean _initialized;
 

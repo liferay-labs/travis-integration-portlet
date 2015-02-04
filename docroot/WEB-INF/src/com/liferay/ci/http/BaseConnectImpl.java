@@ -14,17 +14,22 @@
 
 package com.liferay.ci.http;
 
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.travis.util.PortletPropsUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.net.URLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 
-import javax.xml.bind.DatatypeConverter;
-
-import com.liferay.ci.travis.util.PortletPropsValues;
-import com.liferay.portal.kernel.util.Base64;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * 
@@ -35,7 +40,8 @@ public abstract class BaseConnectImpl {
 	public BaseConnectImpl() throws IOException {
 		super();
 
-		String baseApiURL = PortletPropsValues.TRAVIS_BASE_API_URL;
+		String baseApiURL = PortletPropsUtil.get(
+			PortletPropsKeys.TRAVIS_BASE_API_URL);
 
 		_connectionParams = new AuthConnectionParams(baseApiURL);
 	}
@@ -57,11 +63,63 @@ public abstract class BaseConnectImpl {
 
 		connectionURL += urlSuffix;
 
+		_skipSSLCertificationValidation();
+
 		URL url = new URL(connectionURL);
 
-		URLConnection uc = url.openConnection();
+		HttpsURLConnection uc = (HttpsURLConnection)url.openConnection();
+
+		uc.setRequestMethod("GET");
+		uc.setRequestProperty("Content-length", "0");
+		uc.setAllowUserInteraction(false);
+		uc.setRequestProperty("Accept", "application/json");
 
 		return uc.getInputStream();
+	}
+
+	/*
+	 * fix for Exception in thread "main" javax.net.ssl.SSLHandshakeException:
+	 * sun.security.validator.ValidatorException:
+	 * PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException:
+	 * unable to find valid certification path to requested target
+	 */
+	private void _skipSSLCertificationValidation() {
+		TrustManager[] trustAllCerts = new TrustManager[] {
+			new X509TrustManager() {
+				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
+
+				public void checkClientTrusted(X509Certificate[] certs, String authType) {  }
+
+				public void checkServerTrusted(X509Certificate[] certs, String authType) {  }
+
+			}
+		};
+
+		try {
+			SSLContext sc = SSLContext.getInstance("SSL");
+
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+			// Create all-trusting host name verifier
+			HostnameVerifier allHostsValid = new HostnameVerifier() {
+				public boolean verify(String hostname, SSLSession session) {
+					return true;
+				}
+			};
+
+			// Install the all-trusting host verifier
+			HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected AuthConnectionParams _connectionParams;
