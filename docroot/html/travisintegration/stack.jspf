@@ -24,10 +24,6 @@ ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getOb
 <%
 for (ContinuousIntegrationJob ciJob : ciJobs) {
 	String status = ciJob.getLastBuildStatus();
-
-	if (ciJob.getLastBuildStatus().equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
-		status += " (" + ((ContinuousIntegrationUnstableJob)ciJob).getFailedTestCount() +")";
-	}
 %>
 	<div class="job-wrapper row-fluid">
 		<div class="job-name span7 text-left">

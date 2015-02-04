@@ -22,7 +22,7 @@ String account = GetterUtil.getString(portletPreferences.getValue("account", nul
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
 
-int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
+int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)));
 
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
@@ -46,7 +46,6 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 		<aui:input cssClass="lfr-input-text-container" label="reload-timeout" name="preferences--timeout--" type="text" value="<%= timeout %>" />
 
 		<aui:select id="preferences--viewmode--" label="view-mode" name="preferences--viewmode--">
-			<aui:option selected='<%= (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) %>' label="series-view-mode" value="<%= TravisIntegrationConstants.VIEW_MODE_SERIES %>" />
 			<aui:option selected='<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)%>' label="traffic-lights-view-mode" value="<%=TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS%>" />
 			<aui:option selected='<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK)%>' label="jobs-stack-view-mode" value="<%=TravisIntegrationConstants.VIEW_MODE_JOBS_STACK%>" />
 		</aui:select>
