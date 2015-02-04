@@ -20,7 +20,7 @@
 String buildsNumber = GetterUtil.getString(portletPreferences.getValue("buildsnumber", null));
 String travisAccount = GetterUtil.getString(portletPreferences.getValue("account", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
-String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
+String baseApiURL = PortletPropsUtil.get(PortletPropsKeys.TRAVIS_BASE_API_URL);
 
 int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)));
 

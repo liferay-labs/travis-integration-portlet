@@ -29,7 +29,10 @@ page import="com.liferay.ci.travis.vo.ContinuousIntegrationJob" %><%@
 page import="com.liferay.ci.travis.vo.ContinuousIntegrationUnstableJob" %><%@
 page import="com.liferay.ci.json.JSONUtil" %><%@
 page import="com.liferay.ci.portlet.TravisIntegrationConstants" %><%@
+page import="com.liferay.ci.travis.util.PortletPropsKeys" %><%@
+page import="com.liferay.ci.travis.util.PortletPropsUtil" %><%@
 page import="com.liferay.ci.travis.vo.ContinuousIntegrationBuild" %>
+
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
