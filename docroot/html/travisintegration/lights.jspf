@@ -20,7 +20,6 @@
 String lastBuildStatus = GetterUtil.getString(request.getAttribute("LAST_BUILD_STATUS"), StringPool.BLANK);
 
 String image = "brokenbuild";
-String failingTestDiv = StringPool.BLANK;
 String cssClass = "bottom";
 
 if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS)) {
@@ -28,17 +27,6 @@ if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCE
 }
 else if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
 	image = "failingtestprincipal";
-
-	ContinuousIntegrationBuild testResults = (ContinuousIntegrationBuild)request.getAttribute("TEST_RESULTS");
-
-	int failCount = testResults.getFailedTests();
-
-	StringBundler sb = new StringBundler();
-	sb.append("<span class='fail-count'>");
-	sb.append(failCount);
-	sb.append("</span>");
-
-	failingTestDiv = sb.toString();
 
 	cssClass = "top";
 }
@@ -48,7 +36,6 @@ else if (lastBuildStatus.equals(TravisIntegrationConstants.JENKINS_BUILD_STATUS_
 	<span class="label label-inverse"><%= jobName %></span>
 
 	<img class="statusLogo" src="<%= request.getContextPath() %>/images/<%= image %>.png" />
-	<%= failingTestDiv %>
 </div>
 
 <liferay-portlet:renderURL var="renderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
