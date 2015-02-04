@@ -52,6 +52,8 @@ public class JSONBuildUtil {
 
 		for (int i = 0; i < end; i++) {
 			JSONObject build = (JSONObject)builds.get(i);
+
+			result.put(build);
 		}
 
 		return result;
