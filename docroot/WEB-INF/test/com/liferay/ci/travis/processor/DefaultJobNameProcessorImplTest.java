@@ -40,7 +40,7 @@ public class DefaultJobNameProcessorImplTest {
 	public void testProcessWithDashes() {
 		String actualJobName = _processor.process("job-name-with-dashes");
 
-		assertThat(actualJobName).isEqualTo("job name with dashes");
+		assertThat(actualJobName).isEqualTo("job-name-with-dashes");
 	}
 
 	private static DefaultJobNameProcessorImpl _processor;
