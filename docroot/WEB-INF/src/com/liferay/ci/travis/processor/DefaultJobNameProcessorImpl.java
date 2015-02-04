@@ -31,9 +31,6 @@ public class DefaultJobNameProcessorImpl extends
 
 		String processedJobName = jobName.replace("liferay", StringPool.BLANK);
 
-		processedJobName = processedJobName.replace(
-			StringPool.DASH, StringPool.SPACE);
-
 		return processedJobName.trim();
 	}
 

@@ -60,7 +60,7 @@ public class ContinuousIntegrationJobNameProcessorUtilTest {
 			ContinuousIntegrationJobNameProcessorUtil.process(
 				"job-name-with-dashes");
 
-		assertThat(actualJobName).isEqualTo("job name with dashes");
+		assertThat(actualJobName).isEqualTo("job-name-with-dashes");
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class ContinuousIntegrationJobNameProcessorUtilTest {
 			ContinuousIntegrationJobNameProcessorUtil.process(
 				"liferay-job-name-with-dashes");
 
-		assertThat(actualJobName).isEqualTo("job name with dashes");
+		assertThat(actualJobName).isEqualTo("-job-name-with-dashes");
 	}
 
 	@Test

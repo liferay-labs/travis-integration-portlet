@@ -39,7 +39,7 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 			Travis-CI API URL is set to <%= baseApiURL %>
 		</div>
 
-		<aui:input cssClass="lfr-input-text-container" label="job-name" name="preferences--account--" type="text" value="<%= travisAccount %>" />
+		<aui:input cssClass="lfr-input-text-container" label="travis-ci-username" name="preferences--account--" type="text" value="<%= travisAccount %>" />
 
 		<aui:input cssClass="lfr-input-text-container" label="job-name" name="preferences--jobname--" type="text" value="<%= jobName %>" />
 
