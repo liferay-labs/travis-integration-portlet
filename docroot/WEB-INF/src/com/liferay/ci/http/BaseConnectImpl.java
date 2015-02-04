@@ -16,15 +16,11 @@ package com.liferay.ci.http;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javax.xml.bind.DatatypeConverter;
-
-import com.liferay.ci.travis.util.PortletPropsValues;
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.util.PortletPropsUtil;
 
 /**
  * 
@@ -35,7 +31,8 @@ public abstract class BaseConnectImpl {
 	public BaseConnectImpl() throws IOException {
 		super();
 
-		String baseApiURL = PortletPropsValues.TRAVIS_BASE_API_URL;
+		String baseApiURL = PortletPropsUtil.get(
+			PortletPropsKeys.TRAVIS_BASE_API_URL);
 
 		_connectionParams = new AuthConnectionParams(baseApiURL);
 	}

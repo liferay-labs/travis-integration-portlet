@@ -17,7 +17,8 @@ package com.liferay.ci.travis.processor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.liferay.ci.travis.util.PortletPropsValues;
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.util.PortletPropsUtil;
 
 /**
  * @author Manuel de la Peña
@@ -61,7 +62,8 @@ public class ContinuousIntegrationJobNameProcessorUtil {
 		_processedJobNames = new HashMap<String, String>();
 
 		String processorClassName =
-			PortletPropsValues.JOB_NAME_PROCESSOR_CLASSNAME;
+			PortletPropsUtil.get(
+				PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
 
 		ClassLoader classLoader =
 			ContinuousIntegrationJobNameProcessorUtil.class.getClassLoader();
