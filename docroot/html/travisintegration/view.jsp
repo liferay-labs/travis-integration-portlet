@@ -17,7 +17,7 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-String account = GetterUtil.getString(portletPreferences.getValue("account", null));
+String travisAccount = GetterUtil.getString(portletPreferences.getValue("account", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 
 jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
