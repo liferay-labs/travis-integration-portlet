@@ -39,7 +39,7 @@ public class JSONBuildUtil {
 			String jobName, int maxNumber)
 		throws IOException, JSONException {
 
-		JSONArray builds = getJob(connectionParams, account, jobName);
+		JSONArray builds = _getJob(connectionParams, account, jobName);
 
 		JSONArray result = new JSONArray();
 
@@ -63,7 +63,7 @@ public class JSONBuildUtil {
 			String jobName)
 		throws IOException, JSONException {
 
-		JSONArray builds = getJob(connectionParams, account, jobName);
+		JSONArray builds = _getJob(connectionParams, account, jobName);
 
 		// last build
 
@@ -117,15 +117,15 @@ public class JSONBuildUtil {
 	private JSONBuildUtil() {
 	}
 
-	private static JSONArray getJob(
-			AuthConnectionParams connectionParams, String account, String jobName)
+	private static JSONArray _getJob(
+		AuthConnectionParams connectionParams, String account, String jobName)
 		throws IOException, JSONException {
 
-		return getService(connectionParams).getJob(account, jobName);
+		return _getService(connectionParams).getJob(account, jobName);
 	}
 
-	private static TravisConnectImpl getService(
-			AuthConnectionParams connectionParams)
+	private static TravisConnectImpl _getService(
+		AuthConnectionParams connectionParams)
 		throws IOException {
 
 		if (_service == null) {
