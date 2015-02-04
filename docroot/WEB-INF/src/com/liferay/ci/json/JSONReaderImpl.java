@@ -51,6 +51,9 @@ public class JSONReaderImpl {
 
 			String jsonText = readAll(rd);
 
+			jsonText = jsonText.replace("[", "");
+			jsonText = jsonText.replace("]", "");
+
 			JSONObject json = new JSONObject(jsonText);
 
 			return json;
