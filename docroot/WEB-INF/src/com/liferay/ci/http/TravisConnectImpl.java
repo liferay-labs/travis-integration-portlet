@@ -14,15 +14,10 @@
 
 package com.liferay.ci.http;
 
-import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
-import com.liferay.ci.portlet.TravisIntegrationConstants;
-
 import java.io.IOException;
-import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.liferay.ci.json.JSONReaderImpl;
 
@@ -34,29 +29,6 @@ public class TravisConnectImpl extends BaseConnectImpl {
 
 	public TravisConnectImpl() throws IOException {
 		super();
-	}
-
-	public ContinuousIntegrationBuild getLastBuild(JSONObject build)
-		throws IOException, JSONException {
-
-		String buildURL = (String)build.get("url");
-
-		int buildNumber = build.getInt("number");
-
-		ContinuousIntegrationBuild continuousIntegrationBuild =
-			new ContinuousIntegrationBuild(buildNumber, new URL(buildURL));
-
-		JSONArray buildResult = _get(buildURL, false);
-
-		Object result = buildResult.get(0);
-
-		String resultString = String.valueOf(result);
-
-		continuousIntegrationBuild.setNumber(buildNumber);
-		continuousIntegrationBuild.setStatus(Integer.valueOf(resultString));
-		continuousIntegrationBuild.setUrl(new URL(buildURL));
-
-		return continuousIntegrationBuild;
 	}
 
 	public JSONArray getJob(String account, String jobName)
