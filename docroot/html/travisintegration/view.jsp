@@ -17,13 +17,11 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
 String account = GetterUtil.getString(portletPreferences.getValue("account", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 
 jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
 
-String jobURL = baseApiURL + "/job/" + jobName;
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
 int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
