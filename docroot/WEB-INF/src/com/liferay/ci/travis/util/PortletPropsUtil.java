@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ci.util;
+package com.liferay.ci.travis.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;

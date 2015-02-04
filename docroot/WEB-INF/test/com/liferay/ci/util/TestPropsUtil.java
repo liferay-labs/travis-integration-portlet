@@ -14,6 +14,7 @@
 
 package com.liferay.ci.util;
 
+import com.liferay.ci.travis.util.PortletPropsUtil;
 import org.powermock.api.mockito.PowerMockito;
 
 import java.io.IOException;

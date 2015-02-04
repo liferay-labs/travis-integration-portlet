@@ -20,7 +20,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import com.liferay.ci.travis.util.PortletPropsKeys;
-import com.liferay.ci.util.PortletPropsUtil;
+import com.liferay.ci.travis.util.PortletPropsUtil;
 
 /**
  * 

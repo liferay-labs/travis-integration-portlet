@@ -3,9 +3,9 @@ package com.liferay.ci.portlet;
 import static org.fest.assertions.Assertions.assertThat;
 
 import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.travis.util.PortletPropsUtil;
 import com.liferay.ci.travis.vo.ContinuousIntegrationJob;
 
-import com.liferay.ci.util.PortletPropsUtil;
 import com.liferay.ci.util.TestPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import org.junit.BeforeClass;

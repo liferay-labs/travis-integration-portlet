@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.liferay.ci.travis.util.PortletPropsKeys;
-import com.liferay.ci.util.PortletPropsUtil;
+import com.liferay.ci.travis.util.PortletPropsUtil;
 
 /**
  * @author Manuel de la Peña
