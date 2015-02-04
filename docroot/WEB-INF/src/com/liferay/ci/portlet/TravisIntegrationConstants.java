@@ -44,8 +44,6 @@ public class TravisIntegrationConstants {
 
 	public static final int VIEW_MODE_JOBS_STACK = 3;
 
-	public static final int VIEW_MODE_SERIES = 1;
-
 	public static final int VIEW_MODE_TRAFFIC_LIGHTS = 2;
 
 }

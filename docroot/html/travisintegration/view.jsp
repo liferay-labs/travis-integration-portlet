@@ -53,9 +53,6 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 			<liferay-ui:error exception="<%= FileNotFoundException.class %>" message="the-job-could-not-be-retrieved-please-review-configuration" />
 
 			<c:choose>
-				<c:when test="<%= (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) %>">
-					<%@ include file="builds.jspf" %>
-				</c:when>
 				<c:when test="<%=(viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK)%>">
 					<%@ include file="stack.jspf" %>
 				</c:when>

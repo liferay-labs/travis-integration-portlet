@@ -26,20 +26,6 @@ int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", Str
 
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
-boolean displayStacked = GetterUtil.getBoolean(portletPreferences.getValue("stacked", null));
-
-String charType = GetterUtil.getString(portletPreferences.getValue("charttype", "default"));
-
-boolean displayPassCount = GetterUtil.getBoolean(portletPreferences.getValue("passcount", null));
-boolean displaySkipCount = GetterUtil.getBoolean(portletPreferences.getValue("skipcount", null));
-boolean displayFailCount = GetterUtil.getBoolean(portletPreferences.getValue("failcount", null));
-boolean displayTotalCount = GetterUtil.getBoolean(portletPreferences.getValue("totalcount", null));
-
-String passedCountColor = GetterUtil.getString(portletPreferences.getValue("passedcountcolor", TravisIntegrationConstants.DEFAULT_PASSED_COLOR));
-String skippedCountColor = GetterUtil.getString(portletPreferences.getValue("skippedcountcolor", TravisIntegrationConstants.DEFAULT_SKIPPED_COLOR));
-String failedCountColor = GetterUtil.getString(portletPreferences.getValue("failedcountcolor", TravisIntegrationConstants.DEFAULT_FAILED_COLOR));
-String totalCountColor = GetterUtil.getString(portletPreferences.getValue("totalcountcolor", TravisIntegrationConstants.DEFAULT_TOTAL_COLOR));
-
 String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", null));
 %>
 
@@ -74,48 +60,9 @@ String jobNames = GetterUtil.getString(portletPreferences.getValue("jobnames", n
 		<aui:panel label="jobs-stack-view-mode">
 			<aui:input id="preferences--jobnames--" label="job-names" name="preferences--jobnames--" resizable="true" type="textarea" value="<%= jobNames %>" />
 		</aui:panel>
-
-		<aui:panel label="series-view-mode">
-			<aui:select id="preferences--buildsnumber--" label="number-of-builds-to-view" name="preferences--buildsnumber--">
-				<aui:option selected='<%= buildsNumber.equals("5") %>' label="5" value="5" />
-				<aui:option selected='<%= buildsNumber.equals("10") %>' label="10" value="10" />
-				<aui:option selected='<%= buildsNumber.equals("25") %>' label="25" value="25" />
-				<aui:option selected='<%= buildsNumber.equals("50") %>' label="50" value="50" />
-			</aui:select>
-
-			<aui:input checked="<%= displayStacked %>" label="display-stacked" name="preferences--stacked--" type="checkbox" />
-
-			<aui:select id="preferences--charttype--" label="chart-type" name="preferences--charttype--">
-				<aui:option selected='<%= charType.equals("default") %>' label="default" value="default" />
-				<aui:option selected='<%= charType.equals("column") %>' label="column" value="column" />
-			</aui:select>
-
-			<aui:input checked="<%= displayPassCount %>" label="display-passed-test-count" name="preferences--passcount--" type="checkbox" />
-			<aui:input cssClass="color-picker-trigger" inlineField="true" inlineLabel="true" label="color" name="preferences--passedcountcolor--" type="text" value="<%= passedCountColor %>" />
-
-			<aui:input checked="<%= displaySkipCount %>" label="display-skipped-test-count" name="preferences--skipcount--" type="checkbox" />
-			<aui:input cssClass="color-picker-trigger" inlineField="true" inlineLabel="true" label="color" name="preferences--skippedcountcolor--" type="text" value="<%= skippedCountColor %>" />
-
-			<aui:input checked="<%= displayFailCount %>" label="display-failed-test-count" name="preferences--failcount--" type="checkbox" />
-			<aui:input cssClass="color-picker-trigger" inlineField="true" inlineLabel="true" label="color" name="preferences--failedcountcolor--" type="text" value="<%= failedCountColor %>" />
-
-			<aui:input checked="<%= displayTotalCount %>" label="display-total-test-count" name="preferences--totalcount--" type="checkbox" />
-			<aui:input cssClass="color-picker-trigger" inlineField="true" inlineLabel="true" label="color" name="preferences--totalcountcolor--" type="text" value="<%= totalCountColor %>" />
-		</aui:panel>
 	</aui:fieldset>
 
 	<aui:button-row>
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script use="aui-color-picker-popover">
-	var colorPicker = new A.ColorPickerPopover({
-		trigger: '.color-picker-trigger',
-		zIndex: 2
-	}).render();
-
-	colorPicker.on('select', function(event) {
-		event.trigger.val(event.color);
-	});
-</aui:script>

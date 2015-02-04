@@ -22,7 +22,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.ci.travis.vo.ContinuousIntegrationBuild;
-import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.liferay.ci.http.AuthConnectionParams;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -69,15 +66,16 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		if (configured) {
 			int viewMode = GetterUtil.getInteger(
 				portletPreferences.getValue("viewmode", null),
-				TravisIntegrationConstants.VIEW_MODE_SERIES);
+				TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS);
 
-			if (viewMode == TravisIntegrationConstants.VIEW_MODE_SERIES) {
-				buildSeries(request);
-			}
-			else if (viewMode == TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS) {
+			if (viewMode ==
+				TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS) {
+
 				buildLights(request);
 			}
-			else if (viewMode == TravisIntegrationConstants.VIEW_MODE_JOBS_STACK) {
+			else if (viewMode ==
+				TravisIntegrationConstants.VIEW_MODE_JOBS_STACK) {
+
 				buildProjectsStack(request);
 			}
 		}
@@ -148,56 +146,6 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		}
 		catch (JSONException e) {
 			_log.error("The jobs are not well-formed", e);
-		}
-	}
-
-	protected void buildSeries(RenderRequest request) {
-		PortletPreferences portletPreferences = request.getPreferences();
-
-		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
-
-		String account = portletPreferences.getValue(
-			"account", StringPool.BLANK);
-
-		String jobName = portletPreferences.getValue(
-			"jobname", StringPool.BLANK);
-
-		_log.debug("Getting builds for " + jobName);
-
-		String buildsNumber = portletPreferences.getValue(
-			"buildsnumber", StringPool.BLANK);
-
-		try {
-			int maxBuildNumber = 0;
-
-			if (Validator.isNotNull(buildsNumber)) {
-				maxBuildNumber = Integer.parseInt(buildsNumber);
-
-				_log.debug(
-					"Max BuildNumber for build: " + maxBuildNumber);
-			}
-
-			String jobCacheKey = jobName + StringPool.POUND +
-				buildsNumber;
-
-			if (!_cache.containsKey(portletId, jobCacheKey)) {
-				JSONArray testResults = JSONBuildUtil.getBuilds(
-					getConnectionParams(portletPreferences), account, jobName,
-					maxBuildNumber);
-
-				_cache.put(portletId, jobCacheKey, testResults);
-			}
-
-			request.setAttribute(
-				"TEST_RESULTS", _cache.get(portletId, jobCacheKey));
-		}
-		catch (IOException ioe) {
-			SessionErrors.add(request, ioe.getClass());
-
-			_log.error("The job was not available", ioe);
-		}
-		catch (JSONException e) {
-			_log.error("The job is not well-formed", e);
 		}
 	}
 
