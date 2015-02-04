@@ -135,7 +135,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			portletPreferences);
 
 		try {
-			ContinuousIntegrationJob[] jobs = getJobs(jobNamesParam);
+			ContinuousIntegrationJob[] jobs = parseJobNames(jobNamesParam);
 
 			ContinuousIntegrationJob[] lastBuilds =
 				JSONBuildUtil.getLastBuilds(connectionParams, jobs);
@@ -211,7 +211,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 		return new AuthConnectionParams(url);
 	}
 
-	protected ContinuousIntegrationJob[] getJobs(String jobNamesParam) {
+	protected ContinuousIntegrationJob[] parseJobNames(String jobNamesParam) {
 		String[] jobNames = StringUtil.split(jobNamesParam, StringPool.NEW_LINE);
 
 		ContinuousIntegrationJob[] jobs =

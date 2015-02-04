@@ -37,7 +37,7 @@ public class TravisIntegrationPortletTest {
 
 		String jobNames = "my-account|wonderful-job-name|wonderful-alias";
 
-		ContinuousIntegrationJob[] jobs = portlet.getJobs(jobNames);
+		ContinuousIntegrationJob[] jobs = portlet.parseJobNames(jobNames);
 
 		assertThat(jobs).hasSize(1);
 
@@ -57,7 +57,7 @@ public class TravisIntegrationPortletTest {
 			StringPool.NEW_LINE +
 			"my-account-2|wonderful-job-name-2|wonderful-alias-2";
 
-		ContinuousIntegrationJob[] jobs = portlet.getJobs(jobNames);
+		ContinuousIntegrationJob[] jobs = portlet.parseJobNames(jobNames);
 
 		assertThat(jobs).hasSize(2);
 
@@ -80,7 +80,7 @@ public class TravisIntegrationPortletTest {
 
 		String jobNames = "";
 
-		ContinuousIntegrationJob[] jobs = portlet.getJobs(jobNames);
+		ContinuousIntegrationJob[] jobs = portlet.parseJobNames(jobNames);
 
 		assertThat(jobs).isEmpty();
 	}
@@ -91,7 +91,7 @@ public class TravisIntegrationPortletTest {
 
 		String jobNames = "wonderful-job-name";
 
-		ContinuousIntegrationJob[] jobs = portlet.getJobs(jobNames);
+		ContinuousIntegrationJob[] jobs = portlet.parseJobNames(jobNames);
 
 		assertThat(jobs).hasSize(1);
 
@@ -110,7 +110,7 @@ public class TravisIntegrationPortletTest {
 			"wonderful-job-name-1" + StringPool.NEW_LINE +
 			"wonderful-job-name-2";
 
-		ContinuousIntegrationJob[] jobs = portlet.getJobs(jobNames);
+		ContinuousIntegrationJob[] jobs = portlet.parseJobNames(jobNames);
 
 		assertThat(jobs).hasSize(2);
 
