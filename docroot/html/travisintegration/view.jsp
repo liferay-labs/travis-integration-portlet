@@ -24,7 +24,7 @@ jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
 
 long timeout = GetterUtil.getLong(portletPreferences.getValue("timeout", String.valueOf(TravisIntegrationConstants.DEFAULT_TIMEOUT)));
 
-int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_SERIES)));
+int viewMode = GetterUtil.getInteger(portletPreferences.getValue("viewmode", String.valueOf(TravisIntegrationConstants.VIEW_MODE_TRAFFIC_LIGHTS)));
 
 boolean configured = ConfigurationValidator.isConfigured(portletPreferences);
 
