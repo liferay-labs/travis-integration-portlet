@@ -106,9 +106,8 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			request.setAttribute(
 				"LAST_BUILD_STATUS", lastBuild.getStatus());
 
-			if (lastBuild.getStatus().equals(
-					TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)
-				) {
+			if (lastBuild.getStatus() ==
+					TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
 
 				// retrieve number of broken tests for last build
 
@@ -242,7 +241,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 
 			jobs[i] = new ContinuousIntegrationJob(
 				jobAccount, jobName, jobAlias,
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_NULL);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_PENDING);
 		}
 
 		return jobs;

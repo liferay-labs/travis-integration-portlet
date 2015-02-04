@@ -34,6 +34,12 @@ public class TravisIntegrationConstants {
 
 	public static final String JENKINS_BUILD_STATUS_SUCCESS = "SUCCESS";
 
+	public static final int TRAVIS_BUILD_STATUS_PENDING = -1;
+
+	public static final int TRAVIS_BUILD_STATUS_FAILED = 1;
+
+	public static final int TRAVIS_BUILD_STATUS_SUCCESS = 0;
+
 	public static final String JENKINS_BUILD_STATUS_UNSTABLE = "UNSTABLE";
 
 	public static final int VIEW_MODE_JOBS_STACK = 3;

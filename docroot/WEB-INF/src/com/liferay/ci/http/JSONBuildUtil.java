@@ -128,8 +128,8 @@ public class JSONBuildUtil {
 			ContinuousIntegrationBuild lastBuild =
 				getLastBuild(connectionParams, jobAccount, jobName);
 
-			if (lastBuild.getStatus().equals(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
+			if (lastBuild.getStatus() ==
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
 
 				result[i] = new ContinuousIntegrationUnstableJob(
 					jobAccount, jobName, jobAlias, lastBuild.getStatus(),

@@ -77,7 +77,7 @@ public class TravisConnectImpl extends BaseConnectImpl {
 		}
 
 		continuousIntegrationBuild.setNumber(buildNumber);
-		continuousIntegrationBuild.setStatus(resultString);
+		continuousIntegrationBuild.setStatus(Integer.valueOf(resultString));
 		continuousIntegrationBuild.setUrl(new URL(buildURL));
 
 		return continuousIntegrationBuild;

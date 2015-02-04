@@ -34,7 +34,7 @@ public class ContinuousIntegrationBuild {
 		return _number;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return _status;
 	}
 
@@ -50,7 +50,7 @@ public class ContinuousIntegrationBuild {
 		_number = number;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		_status = status;
 	}
 
@@ -60,7 +60,7 @@ public class ContinuousIntegrationBuild {
 
 	private int _number;
 	private int _failedTests;
-	private String _status;
+	private int _status;
 	private URL _url;
 
 }

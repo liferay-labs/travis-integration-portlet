@@ -41,136 +41,136 @@ public class ContinuousIntegrationJobTest {
 	public void testCompare1() {
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"account", "unstableJobName", "unstableJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"account", "failedJobName", "failedJob",
-			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
 			new ContinuousIntegrationJob[] {unstableJob, failedJob});
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[1].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 	}
 
 	@Test
 	public void testCompare2() {
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"account", "unstableJobName", "unstableJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"account", "failedJobName", "failedJob",
-			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
 			new ContinuousIntegrationJob[] {failedJob, unstableJob});
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[1].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 	}
 
 	@Test
 	public void testCompare3() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"account", "successJobName", "successJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"account", "failedJobName", "failedJob",
-			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(failedJob, successJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[1].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 	}
 
 	@Test
 	public void testCompare4() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"account", "successJobName", "successJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"account", "unstableJobName", "unstableJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"account", "failedJobName", "failedJob",
-			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
 			failedJob, successJob, unstableJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[1].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[2].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 	}
 
 	@Test
 	public void testCompare5() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
 			"account", "successJobName", "successJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob abortedJob = new ContinuousIntegrationJob(
 			"account", "abortedJobName", "abortedJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_ABORTED);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"account", "unstableJobName", "unstableJob",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
 			"account", "failedJobName", "failedJob",
-			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
 			successJob, abortedJob, unstableJob, failedJob);
 
 		assertThat(
 			sortedJobs[0].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILURE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[1].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_ABORTED);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[2].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
 		assertThat(
 			sortedJobs[3].getLastBuildStatus()).isEqualTo(
-				TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+				TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 	}
 
 	@Test
 	public void testCompare6() {
 		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
 			"account", "successJobName1", "successAliasJob1",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
 			"account", "successJobName2", "successAliasJob2",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob1, successJob2);
 
@@ -188,11 +188,11 @@ public class ContinuousIntegrationJobTest {
 	public void testCompare7() {
 		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
 			"account", "successJobName1", "successJob1",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
 			"account", "successJobName2", "successJob2",
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob2, successJob1);
 

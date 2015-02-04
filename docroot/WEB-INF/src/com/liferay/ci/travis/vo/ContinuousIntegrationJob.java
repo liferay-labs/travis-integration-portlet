@@ -24,39 +24,20 @@ public class ContinuousIntegrationJob
 	implements Comparable<ContinuousIntegrationJob>{
 
 	public ContinuousIntegrationJob(
-		String account, String jobName, String alias, String lastBuildStatus) {
+		String account, String jobName, String alias, int lastBuildStatus) {
 
 		this.account = account;
 		this.jobAlias = alias;
 		this.jobName = jobName;
 		this.lastBuildStatus = lastBuildStatus;
-
-		if (lastBuildStatus.equals(
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS)) {
-
-			internalLastBuildStatus = 0;
-		}
-		else if (lastBuildStatus.equals(
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE)) {
-
-			internalLastBuildStatus = -2;
-		}
-		else if (lastBuildStatus.equals(
-			TravisIntegrationConstants.JENKINS_BUILD_STATUS_ABORTED)) {
-
-			internalLastBuildStatus = -3;
-		}
-		else {
-			internalLastBuildStatus = -4;
-		}
 	}
 
 	@Override
 	public int compareTo(ContinuousIntegrationJob that) {
-		if (this.internalLastBuildStatus > that.internalLastBuildStatus) {
+		if (this.lastBuildStatus < that.lastBuildStatus) {
 			return 1;
 		}
-		else if (this.internalLastBuildStatus == that.internalLastBuildStatus) {
+		else if (this.lastBuildStatus == that.lastBuildStatus) {
 			if (this.jobAlias == null || that.jobAlias == null) {
 				return (this.jobName.compareTo(that.jobName));
 			}
@@ -86,14 +67,13 @@ public class ContinuousIntegrationJob
 		}
 	}
 
-	public String getLastBuildStatus() {
+	public int getLastBuildStatus() {
 		return lastBuildStatus;
 	}
 
 	private String account;
-	private int internalLastBuildStatus;
 	private String jobAlias;
 	private String jobName;
-	private String lastBuildStatus;
+	private int lastBuildStatus;
 
 }
