@@ -18,11 +18,7 @@ public class TravisIntegrationConstants {
 
 	public static final long DEFAULT_TIMEOUT = 60000;
 
-	public static final String JENKINS_BUILD_STATUS_ABORTED = "ABORTED";
-
 	public static final String TRAVIS_BUILD_STATUS_FAILURE = "FAILURE";
-
-	public static final String JENKINS_BUILD_STATUS_NULL = "null";
 
 	public static final String BUILD_STATUS_SUCCESS = "SUCCESS";
 
