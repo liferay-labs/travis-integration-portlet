@@ -28,7 +28,7 @@ public class TravisIntegrationConstants {
 
 	public static final String JENKINS_BUILD_STATUS_ABORTED = "ABORTED";
 
-	public static final String JENKINS_BUILD_STATUS_FAILURE = "FAILURE";
+	public static final String TRAVIS_BUILD_STATUS_FAILURE = "FAILURE";
 
 	public static final String JENKINS_BUILD_STATUS_NULL = "null";
 
