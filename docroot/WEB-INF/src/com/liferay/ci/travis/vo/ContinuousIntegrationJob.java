@@ -56,7 +56,12 @@ public class ContinuousIntegrationJob
 			return 1;
 		}
 		else if (this.internalLastBuildStatus == that.internalLastBuildStatus) {
-			return (this.jobName.compareTo(that.jobName));
+			if (this.jobAlias == null || that.jobAlias == null) {
+				return (this.jobName.compareTo(that.jobName));
+			}
+			else {
+				return (this.jobAlias.compareTo(that.jobAlias));
+			}
 		}
 		else {
 			return -1;
