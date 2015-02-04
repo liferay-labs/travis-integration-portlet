@@ -40,11 +40,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare1() {
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
-			"unstableJobName", "unstableJob",
+			"account", "unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
-			"failedJobName", "failedJob",
+			"account", "failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
@@ -61,11 +61,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare2() {
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
-			"unstableJobName", "unstableJob",
+			"account", "unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
-			"failedJobName", "failedJob",
+			"account", "failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
@@ -82,11 +82,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare3() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
-			"successJobName", "successJob",
+			"account", "successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
-			"failedJobName", "failedJob",
+			"account", "failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(failedJob, successJob);
@@ -102,15 +102,15 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare4() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
-			"successJobName", "successJob",
+			"account", "successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
-			"unstableJobName", "unstableJob",
+			"account", "unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
-			"failedJobName", "failedJob",
+			"account", "failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
@@ -130,19 +130,19 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare5() {
 		ContinuousIntegrationJob successJob = new ContinuousIntegrationJob(
-			"successJobName", "successJob",
+			"account", "successJobName", "successJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob abortedJob = new ContinuousIntegrationJob(
-			"abortedJobName", "abortedJob",
+			"account", "abortedJobName", "abortedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_ABORTED);
 
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
-			"unstableJobName", "unstableJob",
+			"account", "unstableJobName", "unstableJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE);
 
 		ContinuousIntegrationJob failedJob = new ContinuousIntegrationJob(
-			"failedJobName", "failedJob",
+			"account", "failedJobName", "failedJob",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_FAILURE);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(
@@ -165,11 +165,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare6() {
 		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
-			"successJobName1", "successAliasJob1",
+			"account", "successJobName1", "successAliasJob1",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
-			"successJobName2", "successAliasJob2",
+			"account", "successJobName2", "successAliasJob2",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob1, successJob2);
@@ -187,11 +187,11 @@ public class ContinuousIntegrationJobTest {
 	@Test
 	public void testCompare7() {
 		ContinuousIntegrationJob successJob1 = new ContinuousIntegrationJob(
-			"successJobName1", "successJob1",
+			"account", "successJobName1", "successJob1",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob successJob2 = new ContinuousIntegrationJob(
-			"successJobName2", "successJob2",
+			"account", "successJobName2", "successJob2",
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob2, successJob1);

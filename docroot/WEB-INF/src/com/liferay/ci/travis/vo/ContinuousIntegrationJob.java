@@ -24,8 +24,9 @@ public class ContinuousIntegrationJob
 	implements Comparable<ContinuousIntegrationJob>{
 
 	public ContinuousIntegrationJob(
-		String jobName, String alias, String lastBuildStatus) {
+		String account, String jobName, String alias, String lastBuildStatus) {
 
+		this.account = account;
 		this.jobAlias = alias;
 		this.jobName = jobName;
 		this.lastBuildStatus = lastBuildStatus;
@@ -68,6 +69,10 @@ public class ContinuousIntegrationJob
 		}
 	}
 
+	public String getAccount() {
+		return account;
+	}
+
 	public String getJobAlias() {
 		return jobAlias;
 	}
@@ -85,6 +90,7 @@ public class ContinuousIntegrationJob
 		return lastBuildStatus;
 	}
 
+	private String account;
 	private int internalLastBuildStatus;
 	private String jobAlias;
 	private String jobName;

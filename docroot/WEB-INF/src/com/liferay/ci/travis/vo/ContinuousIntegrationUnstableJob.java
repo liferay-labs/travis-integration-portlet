@@ -17,16 +17,16 @@ package com.liferay.ci.travis.vo;
 public class ContinuousIntegrationUnstableJob extends ContinuousIntegrationJob {
 
 	public ContinuousIntegrationUnstableJob(
-		String jobName, String alias, String lastBuildStatus) {
+		String account, String jobName, String alias, String lastBuildStatus) {
 
-		this(jobName, alias, lastBuildStatus, 0);
+		this(account, jobName, alias, lastBuildStatus, 0);
 	}
 
 	public ContinuousIntegrationUnstableJob(
-		String jobName, String alias, String lastBuildStatus,
+		String account, String jobName, String alias, String lastBuildStatus,
 		int failedTestCount) {
 
-		super(jobName, alias, lastBuildStatus);
+		super(account, jobName, alias, lastBuildStatus);
 
 		this.failedTestCount = failedTestCount;
 	}
