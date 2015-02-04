@@ -18,6 +18,7 @@
 
 <%
 String baseApiURL = GetterUtil.getString(portletPreferences.getValue("baseapiurl", null));
+String account = GetterUtil.getString(portletPreferences.getValue("account", null));
 String jobName = GetterUtil.getString(portletPreferences.getValue("jobname", null));
 
 jobName = ContinuousIntegrationJobNameProcessorUtil.process(jobName);
