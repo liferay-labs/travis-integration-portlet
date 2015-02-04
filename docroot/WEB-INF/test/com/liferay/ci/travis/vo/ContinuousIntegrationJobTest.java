@@ -16,15 +16,25 @@ package com.liferay.ci.travis.vo;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import com.liferay.ci.portlet.TravisIntegrationConstants;
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.util.PortletPropsUtil;
+import com.liferay.ci.util.TestPropsUtil;
+
 import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.liferay.ci.portlet.TravisIntegrationConstants;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({PortletPropsUtil.class})
 public class ContinuousIntegrationJobTest {
 
 	@Test
@@ -164,6 +174,12 @@ public class ContinuousIntegrationJobTest {
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob1, successJob2);
 
+		PowerMockito.mockStatic(PortletPropsUtil.class);
+
+		TestPropsUtil.mockPortletKey(PortletPropsKeys.TRAVIS_BASE_API_URL);
+		TestPropsUtil.mockPortletKey(
+			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
+
 		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
 		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
 	}
@@ -179,6 +195,12 @@ public class ContinuousIntegrationJobTest {
 			TravisIntegrationConstants.JENKINS_BUILD_STATUS_SUCCESS);
 
 		ContinuousIntegrationJob[] sortedJobs = sort(successJob2, successJob1);
+
+		PowerMockito.mockStatic(PortletPropsUtil.class);
+
+		TestPropsUtil.mockPortletKey(PortletPropsKeys.TRAVIS_BASE_API_URL);
+		TestPropsUtil.mockPortletKey(
+			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
 
 		assertThat(sortedJobs[0].getJobName()).isEqualTo("successJob1");
 		assertThat(sortedJobs[1].getJobName()).isEqualTo("successJob2");
