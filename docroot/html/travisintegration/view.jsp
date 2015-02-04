@@ -14,7 +14,6 @@
  */
 --%>
 
-<%@page import="com.liferay.ci.travis.processor.ContinuousIntegrationJobNameProcessorUtil"%>
 <%@ include file="/html/init.jsp" %>
 
 <%
