@@ -17,80 +17,113 @@ package com.liferay.ci.http;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.Fail.fail;
 
+import com.liferay.ci.travis.util.PortletPropsKeys;
+import com.liferay.ci.travis.util.PortletPropsUtil;
+import com.liferay.ci.util.TestPropsUtil;
+
 import java.io.IOException;
 
 import org.json.JSONArray;
-import org.junit.Before;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * 
  * @author Manuel de la Peña
  */
+@PowerMockIgnore({"javax.net.ssl.*", "javax.security.auth.*", "sun.net.www.*"})
+@PrepareForTest({PortletPropsUtil.class})
+@RunWith(PowerMockRunner.class)
 public class TravisConnectionImplTest {
 
-	@Before
-	public void setUp() throws IOException {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PowerMockito.mockStatic(PortletPropsUtil.class);
+
+		TestPropsUtil.mockPortletKey(PortletPropsKeys.TRAVIS_BASE_API_URL);
+		TestPropsUtil.mockPortletKey(
+			PortletPropsKeys.JOB_NAME_PROCESSOR_CLASSNAME);
+
 		TravisConnectImpl connectionImpl = new TravisConnectImpl();
 
 		connectionParams = connectionImpl._connectionParams;
 	}
 
 	@Test
-	public void testGetBuildsTestReport() throws Exception {
-		String jobName = "mdelapenya";
+	public void testGetBuilds() throws Exception {
+		String account = "liferay";
+		String jobName = "alloy-editor";
 
 		JSONArray testReports = JSONBuildUtil.getBuilds(
-			connectionParams, jobName, 0);
+			connectionParams, account, jobName, 0);
 
 		assertThat(testReports).isNotNull();
 		assertThat(testReports.length()).isGreaterThan(0);
 	}
 
 	@Test(expected = IOException.class)
-	public void testGetBuildsTestReportIOException() throws Exception {
-		connectionParams.setBaseApiUrl("http://fooblablablxxh");
+	public void testGetBuildsIOException() throws Exception {
+		String baseApiUrl = connectionParams.getBaseApiUrl();
 
-		String jobName = "mdelapenya";
+		connectionParams.setBaseApiUrl("https://fooblablablxxh");
 
-		JSONBuildUtil.getBuilds(connectionParams, jobName, 0);
+		String account = "liferay";
+		String jobName = "alloy-editor";
 
-		fail();
+		try {
+			JSONBuildUtil.getBuilds(connectionParams, account, jobName, 0);
+
+			fail();
+		}
+		finally {
+			connectionParams.setBaseApiUrl(baseApiUrl);
+		}
 	}
 
 	@Test
-	public void testGetBuildsTestReportMaxNumber() throws Exception {
-		String jobName = "mdelapenya";
+	public void testGetBuildsMaxNumber() throws Exception {
+		String account = "liferay";
+		String jobName = "alloy-editor";
 
 		JSONArray testReports = JSONBuildUtil.getBuilds(
-			connectionParams, jobName, 100);
+			connectionParams, account, jobName, 100);
 
 		assertThat(testReports).isNotNull();
 		assertThat(testReports.length()).isGreaterThan(0);
 	}
 
 	@Test
-	public void testGetBuildsTestReportMaxNumberNegative() throws Exception {
-		String jobName = "mdelapenya";
+	public void testGetBuildsMaxNumberNegative() throws Exception {
+		String account = "liferay";
+		String jobName = "alloy-editor";
 
 		JSONArray testReports = JSONBuildUtil.getBuilds(
-			connectionParams, jobName, -1);
+			connectionParams, account, jobName, -1);
 
 		assertThat(testReports).isNotNull();
 		assertThat(testReports.length()).isGreaterThan(0);
 	}
 
 	@Test
-	public void testGetBuildsTestReportMaxNumberLessThan() throws Exception {
-		String jobName = "mdelapenya";
+	public void testGetBuildsMaxNumberLessThan() throws Exception {
+		String account = "liferay";
+		String jobName = "alloy-editor";
 
 		JSONArray testReports = JSONBuildUtil.getBuilds(
-			connectionParams, jobName, 3);
+			connectionParams, account, jobName, 2);
 
 		assertThat(testReports).isNotNull();
 		assertThat(testReports.length()).isGreaterThan(0);
+		assertThat(testReports.length()).isEqualTo(2);
 	}
 
-	private AuthConnectionParams connectionParams;
+	private static AuthConnectionParams connectionParams;
 
 }
