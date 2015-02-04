@@ -23,14 +23,20 @@ ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getOb
 <div class="jobs-wrapper container-fluid">
 <%
 for (ContinuousIntegrationJob ciJob : ciJobs) {
-	String status = ciJob.getLastBuildStatus();
+	int status = ciJob.getLastBuildStatus();
+
+	String buildStatus = TravisIntegrationConstants.JENKINS_BUILD_STATUS_UNSTABLE;
+
+	if (status == TravisIntegrationConstants.TRAVIS_BUILD_STATUS_SUCCESS) {
+		buildStatus = TravisIntegrationConstants.BUILD_STATUS_SUCCESS;
+	}
 %>
 	<div class="job-wrapper row-fluid">
 		<div class="job-name span7 text-left">
 			<%= ciJob.getJobAlias() %>
 		</div>
-		<div class="job-status <%= ciJob.getLastBuildStatus().toLowerCase() %> span5 text-center">
-			<%= status %>
+		<div class="job-status <%= buildStatus.toLowerCase() %> span5 text-center">
+			<%= buildStatus %>
 		</div>
 	</div>
 <%
