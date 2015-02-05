@@ -103,7 +103,8 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 				connectionParams, account, jobName);
 
 			request.setAttribute(
-				"LAST_BUILD_STATUS", lastBuild.getStatus());
+				TravisIntegrationConstants.LAST_BUILD_STATUS,
+				lastBuild.getStatus());
 
 			if (lastBuild.getStatus() ==
 					TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED) {
