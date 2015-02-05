@@ -22,6 +22,10 @@ public class TravisIntegrationConstants {
 
 	public static final String BUILD_STATUS_SUCCESS = "SUCCESS";
 
+	public static final String LAST_BUILD_STATUS = "LAST_BUILD_STATUS";
+
+	public static final String TRAVIS_JOBS = "TRAVIS_JOBS";
+
 	public static final int TRAVIS_BUILD_STATUS_PENDING = -1;
 
 	public static final int TRAVIS_BUILD_STATUS_FAILED = 1;

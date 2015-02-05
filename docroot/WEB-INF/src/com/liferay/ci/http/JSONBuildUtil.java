@@ -89,7 +89,7 @@ public class JSONBuildUtil {
 
 		for (int i = 0; i < result.length; i++) {
 			String jobAccount = result[i].getAccount();
-			String jobName = result[i].getJobName();
+			String jobName = result[i].getRealJobName();
 			String jobAlias = result[i].getJobAlias();
 
 			ContinuousIntegrationBuild lastBuild =

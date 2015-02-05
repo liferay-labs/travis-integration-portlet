@@ -17,7 +17,7 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-int lastBuildStatus = GetterUtil.getInteger(request.getAttribute("LAST_BUILD_STATUS"), TravisIntegrationConstants.TRAVIS_BUILD_STATUS_PENDING);
+int lastBuildStatus = GetterUtil.getInteger(request.getAttribute(TravisIntegrationConstants.LAST_BUILD_STATUS), TravisIntegrationConstants.TRAVIS_BUILD_STATUS_PENDING);
 
 String image = "brokenbuild";
 String cssClass = "bottom";

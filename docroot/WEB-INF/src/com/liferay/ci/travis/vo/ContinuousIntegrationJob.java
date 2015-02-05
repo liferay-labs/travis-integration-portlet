@@ -71,6 +71,10 @@ public class ContinuousIntegrationJob
 		return lastBuildStatus;
 	}
 
+	public String getRealJobName() {
+		return jobName;
+	}
+
 	private String account;
 	private String jobAlias;
 	private String jobName;
