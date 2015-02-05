@@ -32,7 +32,7 @@ public class TravisIntegrationPortletTest {
 	}
 
 	@Test
-	public void testGetJobsFromComplexJobName() {
+	public void testParseJobNamesFromComplexJobName() {
 		TravisIntegrationPortlet portlet = new TravisIntegrationPortlet();
 
 		String jobNames = "my-account|wonderful-job-name|wonderful-alias";
@@ -49,7 +49,7 @@ public class TravisIntegrationPortletTest {
 	}
 
 	@Test
-	public void testGetJobsFromComplexJobNames() {
+	public void testParseJobNamesFromComplexJobNames() {
 		TravisIntegrationPortlet portlet = new TravisIntegrationPortlet();
 
 		String jobNames =
@@ -75,7 +75,7 @@ public class TravisIntegrationPortletTest {
 	}
 
 	@Test
-	public void testGetJobsFromEmptyJobNamesIsEmpty() {
+	public void testParseJobNamesFromEmptyJobNamesIsEmpty() {
 		TravisIntegrationPortlet portlet = new TravisIntegrationPortlet();
 
 		String jobNames = "";
@@ -86,7 +86,7 @@ public class TravisIntegrationPortletTest {
 	}
 
 	@Test
-	public void testGetJobsFromSimpleJobName() {
+	public void testParseJobNamesFromSimpleJobName() {
 		TravisIntegrationPortlet portlet = new TravisIntegrationPortlet();
 
 		String jobNames = "wonderful-job-name";
@@ -103,7 +103,7 @@ public class TravisIntegrationPortletTest {
 	}
 
 	@Test
-	public void testGetJobsFromSimpleJobNames() {
+	public void testParseJobNamesFromSimpleJobNames() {
 		TravisIntegrationPortlet portlet = new TravisIntegrationPortlet();
 
 		String jobNames =
