@@ -137,7 +137,7 @@ public class TravisIntegrationPortlet extends MVCPortlet {
 			ContinuousIntegrationJob[] lastBuilds =
 				JSONBuildUtil.getLastBuilds(connectionParams, jobs);
 
-			request.setAttribute("JENKINS_JOBS", lastBuilds);
+			request.setAttribute("TRAVIS_JOBS", lastBuilds);
 		}
 		catch (IOException ioe) {
 			SessionErrors.add(request, ioe.getClass());

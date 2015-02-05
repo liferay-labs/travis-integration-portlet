@@ -17,7 +17,7 @@
 <%@ include file="/html/init.jsp" %>
 
 <%
-ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getObject(request.getAttribute("JENKINS_JOBS"), new ContinuousIntegrationJob[0]);
+ContinuousIntegrationJob[] ciJobs = (ContinuousIntegrationJob[])GetterUtil.getObject(request.getAttribute("TRAVIS_JOBS"), new ContinuousIntegrationJob[0]);
 %>
 
 <div class="jobs-wrapper container-fluid">
