@@ -10,9 +10,9 @@ As Travis provides many metrics by itself, I've decided to start a [Liferay](htt
 
 Below there are some screenshots of the current portlet, contributed by my UX friend [@jhidalgoreina](https://twitter.com/jhidalgoreina), thank you very much!:
 
-<img title="Travis Integration Portlet Configuration" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/jenkins-integration-portlet-002.png" />
-<img title="Travis Integration Portlet Sucessfull Build" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/jenkins-integration-portlet-003.png" />
-<img title="Travis Integration Portlet Broken Build" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/jenkins-integration-portlet-005.png" />
+<img title="Travis Integration Portlet Configuration" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/travis-integration-portlet-002.png" />
+<img title="Travis Integration Portlet Sucessfull Build" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/travis-integration-portlet-003.png" />
+<img title="Travis Integration Portlet Broken Build" src="https://github.com/mdelapenya/travis-integration-portlet/raw/master/images/travis-integration-portlet-005.png" />
 
 ## Configuration
 
