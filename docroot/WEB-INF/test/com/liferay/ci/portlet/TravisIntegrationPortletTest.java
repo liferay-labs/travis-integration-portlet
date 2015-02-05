@@ -45,7 +45,7 @@ public class TravisIntegrationPortletTest {
 
 		assertThat(job.getAccount()).isEqualTo("my-account");
 		assertThat(job.getJobAlias()).isEqualTo("wonderful-alias");
-		assertThat(job.getJobName()).isEqualTo("wonderful job name");
+		assertThat(job.getJobName()).isEqualTo("wonderful-job-name");
 	}
 
 	@Test
@@ -65,13 +65,13 @@ public class TravisIntegrationPortletTest {
 
 		assertThat(job1.getAccount()).isEqualTo("my-account-1");
 		assertThat(job1.getJobAlias()).isEqualTo("wonderful-alias-1");
-		assertThat(job1.getJobName()).isEqualTo("wonderful job name 1");
+		assertThat(job1.getJobName()).isEqualTo("wonderful-job-name-1");
 
 		ContinuousIntegrationJob job2 = jobs[1];
 
 		assertThat(job2.getAccount()).isEqualTo("my-account-2");
 		assertThat(job2.getJobAlias()).isEqualTo("wonderful-alias-2");
-		assertThat(job2.getJobName()).isEqualTo("wonderful job name 2");
+		assertThat(job2.getJobName()).isEqualTo("wonderful-job-name-2");
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class TravisIntegrationPortletTest {
 
 		assertThat(job.getAccount()).isEqualTo("wonderful-job-name");
 		assertThat(job.getJobAlias()).isEqualTo("wonderful-job-name");
-		assertThat(job.getJobName()).isEqualTo("wonderful job name");
+		assertThat(job.getJobName()).isEqualTo("wonderful-job-name");
 	}
 
 	@Test
@@ -118,13 +118,13 @@ public class TravisIntegrationPortletTest {
 
 		assertThat(job1.getAccount()).isEqualTo("wonderful-job-name-1");
 		assertThat(job1.getJobAlias()).isEqualTo("wonderful-job-name-1");
-		assertThat(job1.getJobName()).isEqualTo("wonderful job name 1");
+		assertThat(job1.getJobName()).isEqualTo("wonderful-job-name-1");
 
 		ContinuousIntegrationJob job2 = jobs[1];
 
 		assertThat(job2.getAccount()).isEqualTo("wonderful-job-name-2");
 		assertThat(job2.getJobAlias()).isEqualTo("wonderful-job-name-2");
-		assertThat(job2.getJobName()).isEqualTo("wonderful job name 2");
+		assertThat(job2.getJobName()).isEqualTo("wonderful-job-name-2");
 	}
 
 }
