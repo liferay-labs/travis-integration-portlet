@@ -38,6 +38,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class ContinuousIntegrationJobTest {
 
 	@Test
+	public void testConstructor() {
+		ContinuousIntegrationJob job = new ContinuousIntegrationJob(
+			"account", "unstableJobName", "unstableJob",
+			TravisIntegrationConstants.TRAVIS_BUILD_STATUS_FAILED);
+
+		assertThat(job.getBuildUrl()).isEqualTo(
+			"https://travis-ci.org/account/unstableJobName");
+	}
+
+	@Test
 	public void testCompare1() {
 		ContinuousIntegrationJob unstableJob = new ContinuousIntegrationJob(
 			"account", "unstableJobName", "unstableJob",

@@ -30,6 +30,10 @@ public class ContinuousIntegrationJob
 		this.jobAlias = alias;
 		this.jobName = jobName;
 		this.lastBuildStatus = lastBuildStatus;
+
+		this.buildUrl =
+			TravisIntegrationConstants.TRAVIS_BUILD_URL + "/" + this.account +
+				"/" + this.jobName;
 	}
 
 	@Override
@@ -67,6 +71,10 @@ public class ContinuousIntegrationJob
 		}
 	}
 
+	public String getBuildUrl() {
+		return buildUrl;
+	}
+
 	public int getLastBuildStatus() {
 		return lastBuildStatus;
 	}
@@ -75,6 +83,7 @@ public class ContinuousIntegrationJob
 		return jobName;
 	}
 
+	private String buildUrl;
 	private String account;
 	private String jobAlias;
 	private String jobName;

@@ -20,6 +20,8 @@ public class TravisIntegrationConstants {
 
 	public static final String TRAVIS_BUILD_STATUS_FAILURE = "FAILURE";
 
+	public static final String TRAVIS_BUILD_URL = "https://travis-ci.org";
+
 	public static final String BUILD_STATUS_SUCCESS = "SUCCESS";
 
 	public static final String LAST_BUILD_STATUS = "LAST_BUILD_STATUS";
