@@ -33,7 +33,9 @@ for (ContinuousIntegrationJob ciJob : ciJobs) {
 %>
 	<div class="job-wrapper row-fluid">
 		<div class="job-name span7 text-left">
-			<%= ciJob.getJobAlias() %>
+			<a href="<%= ciJob.getBuildUrl() %>">
+				<%= ciJob.getJobAlias() %>
+			</a>
 		</div>
 		<div class="job-status <%= buildStatus.toLowerCase() %> span5 text-center">
 			<%= buildStatus %>
