@@ -18,6 +18,9 @@ Below there are some screenshots of the current portlet, contributed by my UX fr
 
 There is a properties files under 'docroot/WEB-INF/src' named *portlet.properties*. This file contains some properties with values for connecting to the Travis-ci service. You can extend that file with the *-ext* name convention, creating a *portlet-ext.properties*, where you will put custom values for your application.
 
+## v.1.1.0
+* Add a link to the Travis build on each item in the builds list of Stack mode
+
 ## v.1.0.0
 * Apply Bootstrap fluid styles
 * Supports saving a very basic way to define aliases for builds, using this pattern: TRAVIS_USER|JOB_NAME|JOB_ALIAS. This way long named builds can be shorten by an alias.
